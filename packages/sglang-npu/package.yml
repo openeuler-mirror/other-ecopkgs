@@ -10,10 +10,16 @@ maintainer-email: 2622533158@qq.com
 
 usage: |
 
+  - 推荐 python 版本
+    ```
+    python == 3.11（CANN 9.0.0 栈）
+    指导文档：https://docs.python.org/zh-cn/3/using/index.html
+    ```
+
   - 前置条件
     - 已安装 Ascend NPU 驱动/固件，可通过 `npu-smi info` 确认
     - 已安装匹配版本的 CANN（含 toolkit / NNAL），并完成环境变量配置
-    - 推荐 Python 3.11；参考栈：CANN 9.0.0、torch/torch_npu 2.10.0、triton-ascend 3.2.1
+    - 参考栈：CANN 9.0.0、torch/torch_npu 2.10.0、triton-ascend 3.2.1
     - 系统依赖：`python3-devel`（编译部分 Python 扩展需要）、OpenGL 相关库（`mesa-libGL` / `libglvnd-glx`，避免 opencv 缺 `libGL.so.1`）
 
   - 配置 CANN 环境变量
