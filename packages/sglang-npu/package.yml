@@ -17,10 +17,12 @@ usage: |
     ```
 
   - 前置条件
+    ```
     - 已安装 Ascend NPU 驱动/固件，可通过 `npu-smi info` 确认
     - 已安装匹配版本的 CANN（含 toolkit / NNAL），并完成环境变量配置
     - 参考栈：CANN 9.0.0、torch/torch_npu 2.10.0、triton-ascend 3.2.1
     - 系统依赖：`python3-devel`（编译部分 Python 扩展需要）、OpenGL 相关库（`mesa-libGL` / `libglvnd-glx`，避免 opencv 缺 `libGL.so.1`）
+    ```
 
   - 配置 CANN 环境变量
     ```
@@ -75,6 +77,7 @@ usage: |
     ```
 
   - 说明
+    ```
     - `sgl-kernel-npu` 预编译包命名示例：
       - A2：`sgl-kernel-npu-2026.6.0-torch2.10.0-py311-cann9.0.0-910b-aarch64.zip`
       - A3：`sgl-kernel-npu-2026.6.0-torch2.10.0-py311-cann9.0.0-a3-aarch64.zip`
@@ -82,3 +85,4 @@ usage: |
     - `triton-ascend==3.2.1` 需从 gitcode/华为昇腾相关发布页获取，普通 PyPI 无此版本。
     - NNAL（`libatb.so`）需与 CANN 大版本匹配，并执行 `source .../nnal/atb/set_env.sh`。
     - 更多信息参见：https://docs.sglang.ai/
+    ```
