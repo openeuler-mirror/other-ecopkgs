@@ -11,7 +11,9 @@ maintainer-email: 2622533158@qq.com
 usage: |
 
   - 前置条件
+    ```
     - 系统依赖：`cmake`、`gcc-c++`、`make`
+    ```
 
   - 获取源码（tag: `b10456`）
     ```
@@ -41,8 +43,10 @@ usage: |
     ```
 
   - 说明
+    ```
     - 当前为纯 CPU 构建，不依赖 CANN / NPU。
     - `-ngl 0` 表示不把层卸载到加速器，全部在 CPU 上运行。
     - `-st` 为单轮对话后退出，避免进入交互模式。
     - `b10456` 已可作为 git tag 拉取。
     - 更多信息参见：https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md
+    ```
