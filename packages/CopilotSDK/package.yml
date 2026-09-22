@@ -1,0 +1,79 @@
+name: CopilotSDK
+category: others
+type: 源码安装
+description: GitHub official SDK for building custom Copilot extensions and skills
+license: MIT
+homepage: https://github.com/github/copilot-sdk
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y nodejs npm git
+    # 或安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # npm 安装为项目依赖（推荐）
+    npm install @github/copilot-sdk
+    ```
+
+  - 验证安装
+    ```
+    npm list @github/copilot-sdk
+    # 应显示版本号
+    ```
+
+  - 基础配置
+    ```
+    # 配置 GitHub Token
+    export GITHUB_TOKEN="ghp_xxx"
+
+    # 项目根目录 copilot.config.json
+    {
+      "name": "my-copilot-extension",
+      "version": "1.0.0",
+      "description": "My custom Copilot extension",
+      "capabilities": [
+        "code-review",
+        "code-generation",
+        "documentation"
+      ]
+    }
+    ```
+
+  - 快速使用
+    ```
+    # index.js
+    const { CopilotExtension } = require('@github/copilot-sdk');
+
+    const extension = new CopilotExtension({
+      name: 'my-extension',
+      version: '1.0.0'
+    });
+
+    extension.start();
+
+    # 常用命令
+    node index.js       # 运行扩展
+    npm test            # 运行测试
+    npm run build       # 构建项目
+    ```
+
+  - 卸载
+    ```
+    npm uninstall @github/copilot-sdk
+    ```

@@ -1,0 +1,71 @@
+name: Flowise
+category: others
+type: 源码安装
+description: Open-source low-code platform to build LLM apps, RAG pipelines and AI agents via drag-and-drop
+license: NOASSERTION
+homepage: https://github.com/FlowiseAI/Flowise
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 若 Node.js / npm 不满足，可在 openEuler 上安装
+    sudo dnf install -y nodejs npm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # npm 全局安装（推荐）
+    npm install -g flowise
+
+    # 备选：Docker 安装
+    docker run -d \
+      --name flowise \
+      -p 3000:3000 \
+      -v ~/.flowise:/root/.flowise \
+      flowiseai/flowise
+    ```
+
+  - 验证安装
+    ```
+    flowise --version
+    # 应输出版本号信息
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 启动配置
+    flowise start --port 3000
+    flowise start --FLOWISE_USERNAME=admin --FLOWISE_PASSWORD=yourpassword
+    ```
+
+  - 启动 / 快速使用
+    ```
+    flowise start
+    # 浏览器打开 http://localhost:3000
+
+    flowise start                                  # 启动服务
+    flowise start --port 3000                      # 指定端口
+    flowise start --FLOWISE_USERNAME=admin --FLOWISE_PASSWORD=password  # 安全启动
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g flowise
+    rm -rf ~/.flowise
+    ```

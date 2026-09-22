@@ -1,0 +1,79 @@
+name: Magentic-UI
+category: others
+type: 源码安装
+description: Open-source multi-agent conversation UI framework by Microsoft
+license: MIT
+homepage: https://github.com/microsoft/magentic-ui
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    python --version
+    node --version
+    # Python >= 3.9、Node.js >= 18
+
+    sudo dnf install -y python3 python3-pip python3-devel git gcc nodejs npm
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    uv pip install "magentic-ui[all]"
+
+    # 或使用 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ "magentic-ui[all]"
+
+    # 方式二：从源码安装
+    git clone https://github.com/microsoft/magentic-ui.git
+    cd magentic-ui
+    pip install -e .
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-xxx"
+
+    # 创建 config.yaml：
+    server:
+      host: "0.0.0.0"
+      port: 8080
+
+    agents:
+      - name: "Assistant"
+        role: "assistant"
+        model: "gpt-4o"
+        system_message: "You are a helpful assistant."
+
+    ui:
+      theme: "light"
+      show_debug_panel: true
+    ```
+
+  - 快速使用
+    ```
+    # 启动服务
+    magentic-ui serve --config config.yaml
+    # 访问 http://localhost:8080 打开 UI 界面
+
+    # 常用命令
+    magentic-ui start           # 启动服务
+    magentic-ui serve --config  # 指定配置文件启动
+    magentic-ui --help          # 帮助
+    ```
+
+  - 验证安装
+    ```
+    python -c "import magentic_ui; print(magentic_ui.__version__)"
+    ```
+
+  - 卸载
+    ```
+    pip uninstall magentic-ui -y
+    ```

@@ -1,0 +1,79 @@
+name: Langflow
+category: others
+type: 源码安装
+description: Visual drag-and-drop AI workflow builder
+license: MIT
+homepage: https://github.com/langflow-ai/langflow
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install langflow
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ langflow
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    source .venv/bin/activate
+    pip install langflow
+
+    # 国内镜像加速
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ langflow
+
+    # 方式二：备选 uv 安装
+    uv pip install langflow
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 启动配置
+    python -m langflow run --port 7860
+    python -m langflow run --host 0.0.0.0
+    ```
+
+  - 快速使用
+    ```
+    # 启动 Langflow
+    python -m langflow run
+    # 浏览器打开 http://127.0.0.1:7860
+
+    # 常用命令
+    python -m langflow run                          # 启动服务
+    python -m langflow run --port 7860              # 指定端口
+    python -m langflow --help                       # 查看帮助
+    ```
+
+  - 验证安装
+    ```
+    python -m langflow --version
+    # 应输出版本号信息
+
+    python -m langflow run
+    # 浏览器打开 http://127.0.0.1:7860，拖拽一个 OpenAI 模型和 Chat Output 组件，连接运行
+    ```
+
+  - 卸载
+    ```
+    pip uninstall langflow -y
+    rm -rf ~/.langflow .venv
+    ```

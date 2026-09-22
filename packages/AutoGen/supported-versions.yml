@@ -1,0 +1,4 @@
+24.03-LTS-Next:
+    python-v0.7.5:
+        - x86_64
+        - aarch64

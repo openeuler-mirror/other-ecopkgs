@@ -1,0 +1,72 @@
+name: ChatGPT Desktop
+category: others
+type: 源码安装
+description: Unofficial ChatGPT desktop client built with Rust
+license: unknown
+homepage: https://github.com/lencx/ChatGPT
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 预编译 AppImage 二进制可直接运行
+    # 源码编译需先安装 Rust 工具链及编译依赖：
+    sudo dnf install -y gcc gcc-c++ make cmake git
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    source ~/.cargo/env
+    ```
+
+  - 安装
+    ```
+    # 方式一：AppImage 运行（推荐）
+    # 1. 打开 Release 页面：https://github.com/lencx/ChatGPT/releases
+    # 2. 下载 Linux 平台的 ChatGPT_xxx_amd64.AppImage
+    # 3. 赋予执行权限并运行：
+    chmod +x ChatGPT_xxx_amd64.AppImage
+    ./ChatGPT_xxx_amd64.AppImage
+
+    # 方式二：源码编译
+    git clone https://github.com/lencx/ChatGPT.git
+    cd ChatGPT
+    cargo build --release
+    # 可执行文件位于 target/release/
+    ```
+
+  - 基础配置
+    ```
+    # 登录 ChatGPT 账号：打开应用后，使用 OpenAI ChatGPT 账号登录即可开始使用
+    # 应用设置：菜单栏或快捷键 Ctrl+, 访问，含窗口行为、系统托盘、自动更新、语言设置
+    # 配置文件位于 ~/.config/chatgpt
+    ```
+
+  - 快速使用
+    ```
+    # 1. 启动 ChatGPT Desktop
+    # 2. 登录 OpenAI 账号
+    # 3. 在输入框中输入问题，与 ChatGPT 对话
+
+    # 常用快捷键
+    # Ctrl+Shift+M  切换多窗口模式
+    # Ctrl+Shift+O  打开新窗口
+    # Ctrl+Shift+L  切换深色/浅色主题
+    # Ctrl+R        刷新页面
+    ```
+
+  - 验证安装
+    ```
+    # 启动应用，窗口打开并显示 ChatGPT 登录界面即表示安装成功
+    ./ChatGPT_xxx_amd64.AppImage
+    ```
+
+  - 卸载
+    ```
+    # AppImage 方式：直接删除二进制文件及配置目录
+    rm -f ChatGPT_xxx_amd64.AppImage
+    rm -rf ~/.config/chatgpt
+
+    # 源码编译方式：删除源码目录
+    rm -rf ChatGPT
+    ```

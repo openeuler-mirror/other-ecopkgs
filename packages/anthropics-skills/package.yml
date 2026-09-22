@@ -1,0 +1,66 @@
+name: anthropics-skills
+category: others
+type: 源码安装
+description: Anthropic official AI agent skills library for software dev, data analysis and documentation
+license: unknown
+homepage: https://github.com/anthropics/skills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    python --version
+    # 需要 >= 3.8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install -e .
+    # 或 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 安装
+    ```
+    # git clone（推荐）
+    git clone https://github.com/anthropics/skills.git
+    cd skills
+
+    # 本项目技能文件无需编译安装，如需作为 Python 包使用再执行
+    pip install -e .
+    ```
+
+  - 验证安装
+    ```
+    ls -la
+    # 确认能看到 skills/ 目录及技能文件
+    ls skills/
+    ls skills/*.md | head -5
+    ```
+
+  - 基础配置
+    ```
+    export ANTHROPIC_SKILLS_DIR="./skills"
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+    ```
+
+  - 快速使用
+    ```
+    # 在 Claude Code 或 Cline 中引用技能
+    claude --load-skills ./skills
+    claude --list-skills
+
+    ls skills/              # 列出所有技能
+    ls skills/*.md | head   # 查看技能文件
+    ```
+
+  - 卸载
+    ```
+    pip uninstall anthropic-skills   # 如安装过 Python 包
+    cd ..
+    rm -rf skills                    # 删除项目目录
+    ```

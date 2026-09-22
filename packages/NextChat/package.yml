@@ -1,0 +1,93 @@
+name: NextChat
+category: others
+type: 源码安装
+description: Open-source cross-platform AI chat interface supporting multiple model backends
+license: MIT
+homepage: https://github.com/ChatGPTNextWeb/NextChat
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    docker --version
+    docker compose version
+    # Docker >= 20.10
+
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+    docker --version
+    ```
+
+  - 安装
+    ```
+    # 方式一：Docker 部署（推荐）
+    docker run -d \
+      --name nextchat \
+      -p 3000:3000 \
+      -e OPENAI_API_KEY="sk-xxx" \
+      -e BASE_URL="https://api.openai.com/v1" \
+      yidadaa/chatgpt-next-web:latest
+
+    # 方式二：Docker Compose 部署
+    # 创建 docker-compose.yml：
+    services:
+      nextchat:
+        image: yidadaa/chatgpt-next-web:latest
+        ports:
+          - "3000:3000"
+        environment:
+          - OPENAI_API_KEY=sk-xxx
+          - BASE_URL=https://api.openai.com/v1
+        volumes:
+          - ./data:/app/data
+        restart: unless-stopped
+
+    docker compose up -d
+    ```
+
+  - 基础配置
+    ```
+    # 主要环境变量
+    # OPENAI_API_KEY     OpenAI API Key         示例: sk-xxx
+    # BASE_URL           API 基础地址           示例: https://api.openai.com/v1
+    # DEFAULT_MODEL      默认模型               示例: gpt-4o
+    # AUTH_SECRET_KEY    访问密码               示例: your-password
+
+    # 配置本地 Ollama 后端
+    docker run -d \
+      --name nextchat \
+      -p 3000:3000 \
+      -e OPENAI_API_KEY="ollama" \
+      -e BASE_URL="http://host.docker.internal:11434/v1" \
+      yidadaa/chatgpt-next-web:latest
+    ```
+
+  - 快速使用
+    ```
+    # 打开浏览器访问 http://localhost:3000
+    # 在左下角设置中填入 API Key（如未在环境变量中设置）
+    # 选择模型开始对话
+
+    # 常用命令
+    docker compose up -d      # 启动
+    docker compose down       # 停止
+    docker compose logs -f    # 查看日志
+    docker compose pull       # 更新镜像
+    ```
+
+  - 验证安装
+    ```
+    # 访问 http://localhost:3000，应能正常加载界面
+    curl -I http://localhost:3000
+    ```
+
+  - 卸载
+    ```
+    docker stop nextchat
+    docker rm nextchat
+    docker rmi yidadaa/chatgpt-next-web:latest
+    rm -rf ./data
+    ```

@@ -1,0 +1,92 @@
+name: CLIProxyAPI
+category: others
+type: 源码安装
+description: Go-based CLI API proxy with request forwarding and caching
+license: MIT
+homepage: https://github.com/router-for-me/CLIProxyAPI
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 方式一：dnf 安装 Go（Go >= 1.21，推荐 >= 1.22）
+    sudo dnf install -y golang git
+
+    # 方式二：从 https://go.dev/dl/ 下载最新版二进制包安装
+    sudo dnf install -y gcc gcc-c++ make
+
+    # 验证环境
+    go version
+    # 需要 >= 1.21
+    ```
+
+  - 安装
+    ```
+    # 方式一：go install 安装（推荐）
+    go install github.com/CLIProxyAPI/CLIProxyAPI@latest
+
+    # 确保 $GOPATH/bin 已添加到 PATH
+    export PATH=$PATH:$(go env GOPATH)/bin
+    # 添加到 ~/.bashrc 使配置永久生效
+
+    # 方式二：从源码编译安装
+    git clone https://github.com/CLIProxyAPI/CLIProxyAPI.git
+    cd CLIProxyAPI
+    go build -o cliproxyapi .
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 快速启动代理（默认监听 8080 端口）
+    cliproxyapi start
+    cliproxyapi start --port 9090 --target https://api.example.com
+
+    # 配置文件示例 ~/.cliproxyapi/config.yaml
+    # server:
+    #   port: 8080
+    #   host: "0.0.0.0"
+    # proxy:
+    #   target: "https://api.example.com"
+    #   timeout: 30s
+    # headers:
+    #   add:
+    #     X-Proxy: "CLIProxyAPI"
+    # logging:
+    #   level: "info"
+    #   format: "json"
+    ```
+
+  - 启动 / 快速使用
+    ```
+    cliproxyapi start --target https://jsonplaceholder.typicode.com
+
+    # 测试代理
+    curl -x http://localhost:8080 https://httpbin.org/ip
+
+    # 查看状态 / 停止 / 版本
+    cliproxyapi status
+    cliproxyapi stop
+    cliproxyapi version
+    ```
+
+  - 验证安装
+    ```
+    cliproxyapi version
+    # 应输出版本号信息
+
+    cliproxyapi start &
+    sleep 2
+    curl -x http://localhost:8080 https://httpbin.org/get
+    # 预期：返回 httpbin.org 的响应
+    ```
+
+  - 卸载
+    ```
+    # 删除二进制文件
+    rm -f $(go env GOPATH)/bin/cliproxyapi
+    # 删除配置目录
+    rm -rf ~/.cliproxyapi
+    ```

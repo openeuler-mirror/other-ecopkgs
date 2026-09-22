@@ -1,0 +1,90 @@
+name: Browser-use
+category: others
+type: 源码安装
+description: AI agent browser automation tool based on Playwright
+license: MIT
+homepage: https://github.com/browser-use/browser-use
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    python --version
+    # 需要 >= 3.9
+
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    uv pip install browser-use
+    playwright install --with-deps chromium
+
+    # 或使用 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ browser-use
+    playwright install --with-deps chromium
+
+    # 方式二：从源码安装
+    git clone https://github.com/browser-use/browser-use.git
+    cd browser-use
+    pip install -e .
+    playwright install chromium
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-xxx"
+
+    # 浏览器配置
+    from browser_use import BrowserConfig
+
+    config = BrowserConfig(
+        headless=True,                # 无头模式
+        extra_chromium_args=[
+            "--window-size=1280,720",
+            "--disable-blink-features=AutomationControlled",
+        ],
+    )
+    ```
+
+  - 快速使用
+    ```
+    from browser_use import Agent
+    import asyncio
+
+    async def main():
+        agent = Agent(
+            task="Go to https://www.google.com and search for 'AI Agent'",
+            llm="gpt-4o",
+            api_key="sk-xxx",
+        )
+        result = await agent.run()
+        print(result)
+
+    asyncio.run(main())
+
+    # 常用命令
+    python -m browser_use --task "Search for Python tutorials"  # CLI 模式
+    playwright open https://example.com                          # 测试 Playwright
+    playwright codegen https://example.com                       # 录制操作
+    ```
+
+  - 验证安装
+    ```
+    python -c "import browser_use; print(browser_use.__version__)"
+    python -c "from playwright.sync_api import sync_playwright; print('Playwright OK')"
+    ```
+
+  - 卸载
+    ```
+    pip uninstall browser-use -y
+    playwright uninstall
+    rm -rf ~/.cache/ms-playwright
+    ```

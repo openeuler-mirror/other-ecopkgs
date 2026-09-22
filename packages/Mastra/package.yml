@@ -1,0 +1,93 @@
+name: Mastra
+category: others
+type: 源码安装
+description: TypeScript framework for building production-grade AI agents
+license: NOASSERTION
+homepage: https://github.com/mastra-ai/mastra
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Node.js 版本（需要 >= 18）
+    node --version
+    npm --version   # 需要 >= 8
+
+    # openEuler 安装 Node.js 与 npm
+    sudo dnf install -y nodejs npm
+
+    # 或使用 nvm 安装最新 LTS
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # 方式一：使用 CLI 创建项目（推荐）
+    npx create-mastra
+    cd my-mastra-app
+    npm install
+
+    # 方式二：备选 npm 安装核心包
+    npm install mastra
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 创建 mastra.config.ts 配置文件示例
+    import { defineConfig } from "mastra";
+
+    export default defineConfig({
+      agents: {
+        myAgent: {
+          name: "My Agent",
+          model: { provider: "OPEN_AI", name: "gpt-4o" },
+          instructions: "你是一个有用的 AI 助手。",
+        },
+      },
+    });
+    ```
+
+  - 快速使用
+    ```
+    # 基本用法
+    import { Agent } from "mastra";
+    import { openai } from "@mastra/openai";
+
+    const agent = new Agent({
+      name: "Assistant",
+      model: openai("gpt-4o"),
+      instructions: "你是一个有用的 AI 助手。",
+    });
+
+    const result = await agent.generate("你好！");
+    console.log(result.text);
+
+    # 常用命令
+    npx create-mastra     # 创建新项目
+    npx mastra dev        # 启动开发服务器
+    npx mastra build      # 构建项目
+    ```
+
+  - 验证安装
+    ```
+    npx mastra --version
+    # 应输出版本号信息
+
+    npx mastra dev
+    # 在浏览器中打开 http://localhost:3000 查看 Agent 状态
+    ```
+
+  - 卸载
+    ```
+    npm uninstall mastra
+    rm -rf my-mastra-app
+    ```

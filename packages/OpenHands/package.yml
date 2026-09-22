@@ -1,0 +1,88 @@
+name: OpenHands
+category: others
+type: 源码安装
+description: Open-source AI coding agent platform that writes code and runs tasks in a sandboxed environment
+license: MIT
+homepage: https://github.com/All-Hands-AI/OpenHands
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    docker --version
+    # Docker >= 20.10
+    docker compose version
+    # Docker Compose >= 2.0
+
+    # 若 Docker 未安装，可在 openEuler 上配置 Docker CE 源并安装
+    sudo dnf install -y dnf-plugins-core
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+    ```
+
+  - 安装
+    ```
+    # Docker 部署（推荐）
+    docker pull ghcr.io/all-hands-ai/openhands
+
+    docker run -d \
+      --name openhands \
+      -p 3000:3000 \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      -v ~/.openhands-state:/.openhands-state \
+      -e LLM_API_KEY="sk-your-api-key" \
+      -e LLM_MODEL="gpt-4o" \
+      ghcr.io/all-hands-ai/openhands
+
+    # 备选：Docker Compose（创建 docker-compose.yml 后执行）
+    export LLM_API_KEY="sk-your-api-key"
+    docker compose up -d
+    ```
+
+  - 验证安装
+    ```
+    docker ps | grep openhands
+    # 浏览器打开 http://localhost:3000
+    curl http://localhost:3000/api/health
+    ```
+
+  - 基础配置
+    ```
+    # 配置环境变量
+    export LLM_API_KEY="sk-your-api-key"
+    export LLM_MODEL="gpt-4o"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 配置文件 config.toml
+    [llm]
+    model = "gpt-4o"
+    api_key = "sk-your-api-key"
+    temperature = 0.0
+
+    [workspace]
+    mount_path = "./workspace"
+
+    [sandbox]
+    timeout = 300
+    ```
+
+  - 快速使用
+    ```
+    docker compose up -d                   # 启动 OpenHands
+    docker compose down                    # 停止 OpenHands
+    docker compose logs -f                 # 查看日志
+    docker compose pull                    # 更新镜像
+    ```
+
+  - 卸载
+    ```
+    docker stop openhands
+    docker rm openhands
+    docker rmi ghcr.io/all-hands-ai/openhands
+    docker compose down -v
+    rm -rf ~/.openhands-state
+    ```

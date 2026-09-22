@@ -1,0 +1,75 @@
+name: CAMEL
+category: others
+type: 源码安装
+description: Role-playing based multi-agent collaboration framework
+license: Apache-2.0
+homepage: https://github.com/camel-ai/camel
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.9
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 uv 安装（推荐）
+    uv venv .venv && source .venv/bin/activate
+    uv pip install "camel-ai[all]"
+
+    # 方式二：通过 pip 安装（备选）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ "camel-ai[all]"
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+    export OPENAI_API_BASE_URL="https://api.openai.com/v1"  # 可选
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+    ```
+
+  - 快速使用
+    ```
+    # 基本用法
+    from camel.agents import ChatAgent
+    from camel.messages import BaseMessage
+    from camel.models import ModelFactory
+    from camel.types import ModelPlatformType, ModelType
+
+    model = ModelFactory.create(
+        model_platform=ModelPlatformType.OPENAI,
+        model_type=ModelType.GPT_4O,
+    )
+    agent = ChatAgent(system_message="You are a helpful assistant.", model=model)
+    response = agent.step(BaseMessage.make_user_message(
+        role_name="User", content="Explain what is CAMEL"))
+    print(response.msgs[0].content)
+
+    # 常用命令
+    python examples/ai_society/role_playing.py     # 运行示例脚本
+    pytest tests/ -v                                # 运行测试
+    ```
+
+  - 验证安装
+    ```
+    python -c "import camel; print(camel.__version__)"
+
+    python examples/ai_society/role_playing.py
+    # 应输出多 Agent 角色扮演对话
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall camel-ai -y
+    rm -rf camel/
+    ```

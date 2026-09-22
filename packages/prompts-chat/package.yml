@@ -1,0 +1,60 @@
+name: prompts-chat
+category: others
+type: 源码安装
+description: Curated collection of high-quality Chinese ChatGPT prompts
+license: MIT
+homepage: https://github.com/PlexPt/awesome-chatgpt-prompts-zh
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 安装 Git（建议 >= 2.30）
+    sudo dnf install -y git
+    git --version
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 方式一：克隆仓库（推荐）
+    git clone https://github.com/PlexPt/awesome-chatgpt-prompts-zh.git
+    cd awesome-chatgpt-prompts-zh
+
+    # 方式二：直接下载 ZIP
+    curl -L -o prompts-zh.zip \
+      https://github.com/PlexPt/awesome-chatgpt-prompts-zh/archive/refs/heads/main.zip
+    unzip prompts-zh.zip
+    cd awesome-chatgpt-prompts-zh-main
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 查看分类列表
+    grep "^## " README.md
+
+    # 搜索特定场景的提示词
+    grep -A 10 "翻译" README.md
+
+    # 提示词使用方式：直接复制提示词文本到 AI 对话工具中使用
+    ```
+
+  - 验证获取
+    ```
+    ls -la
+    # 应看到 README.md 和 prompts 数据文件
+
+    ls -la README.md
+    # 预期：文件存在
+
+    grep -c "^## " README.md
+    # 预期：显示提示词分类数量
+    ```
+
+  - 卸载
+    ```
+    # 删除项目目录
+    rm -rf awesome-chatgpt-prompts-zh
+    ```

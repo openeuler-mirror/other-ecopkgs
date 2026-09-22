@@ -1,0 +1,76 @@
+name: MathModelAgent
+category: others
+type: 源码安装
+description: AI agent for math modeling and optimization problem solving
+license: unknown
+homepage: https://github.com/jihe520/MathModelAgent
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Python >= 3.9，推荐 >= 3.10）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    python3 --version
+
+    # 推荐使用 uv 创建虚拟环境并配置国内镜像
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 方式一：从源码安装（推荐）
+    git clone https://github.com/jihe520/MathModelAgent.git
+    cd MathModelAgent
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+    pip install -e .
+
+    # 方式二：通过 pip 安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ mathmodelagent
+
+    # 补充求解器依赖
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ pulp cvxopt cvxpy
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 如使用 AI 辅助建模
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 配置文件 config.yaml
+    # ai:
+    #   provider: "openai"
+    #   model: "gpt-4o"
+    #   api_key: "${OPENAI_API_KEY}"
+    # solver:
+    #   default: "scipy"  # scipy, pulp, cvxopt
+    #   timeout: 60
+    # output:
+    #   format: "markdown"
+    #   directory: "./reports"
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 命令行用法
+    mathmodel solve --input problem.txt --output report.md
+    mathmodel plot --result result.json
+    mathmodel list-models
+    ```
+
+  - 验证安装
+    ```
+    python -c "import mathmodelagent; print('安装成功')"
+    ```
+
+  - 卸载
+    ```
+    pip uninstall mathmodelagent -y
+    # 如从源码安装，删除项目目录
+    rm -rf MathModelAgent
+    ```

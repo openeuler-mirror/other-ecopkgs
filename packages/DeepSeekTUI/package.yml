@@ -1,0 +1,77 @@
+name: DeepSeekTUI
+category: others
+type: 源码安装
+description: DeepSeek terminal UI client for interactive chat with streaming output and session management
+license: MIT
+homepage: https://github.com/ccch1mneyyy/dsh-TUI
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    python --version
+    # 需要 >= 3.8
+
+    # 若 Python / pip / 编译工具链不满足，可在 openEuler 上安装
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install deepseek-tui
+    # 或 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ deepseek-tui
+    ```
+
+  - 安装
+    ```
+    # pip 安装（推荐，在虚拟环境中）
+    source .venv/bin/activate
+    pip install deepseek-tui
+    # 国内镜像加速
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ deepseek-tui
+
+    # 备选：uv 安装
+    uv pip install deepseek-tui
+    ```
+
+  - 验证安装
+    ```
+    deepseek-tui --version
+    # 应输出版本号信息
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key（访问 https://platform.deepseek.com 创建）
+    export DEEPSEEK_API_KEY="sk-xxx"
+
+    # 配置文件 ~/.config/deepseek-tui/config.json
+    {
+      "api_key": "sk-xxx",
+      "model": "deepseek-chat",
+      "temperature": 0.7,
+      "max_tokens": 4096,
+      "theme": "default",
+      "stream": true
+    }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    deepseek-tui
+    # 在界面中输入任意问题，确认能正常收到回复
+
+    deepseek-tui                        # 启动 TUI
+    deepseek-tui --model deepseek-reasoner  # 使用推理模型
+    deepseek-tui --theme dracula        # 设置主题
+    deepseek-tui --clear                # 清除所有会话
+    deepseek-tui --help                 # 查看帮助
+    ```
+
+  - 卸载
+    ```
+    pip uninstall deepseek-tui -y
+    rm -rf ~/.config/deepseek-tui .venv
+    ```

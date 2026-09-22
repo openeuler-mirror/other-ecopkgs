@@ -1,0 +1,4 @@
+24.03-LTS-Next:
+    "@mastra/core@1.67.0":
+        - x86_64
+        - aarch64

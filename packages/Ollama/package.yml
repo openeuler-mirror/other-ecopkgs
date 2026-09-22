@@ -1,0 +1,80 @@
+name: Ollama
+category: others
+type: 源码安装
+description: Tool to run and manage open-source large language models locally
+license: MIT
+homepage: https://github.com/ollama/ollama
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 需 glibc 2.17+
+    uname -a
+
+    # 检查 GPU（NVIDIA）
+    nvidia-smi
+
+    sudo dnf install -y curl gcc gcc-c++ make
+
+    # 如需 GPU 加速
+    sudo dnf install -y nvidia-driver
+    ```
+
+  - 安装
+    ```
+    # 方式一：一键安装脚本（推荐）
+    curl -fsSL https://ollama.com/install.sh | sh
+
+    # 方式二：手动安装
+    curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama.tgz
+    sudo tar -C /usr -xzf ollama.tgz
+    sudo systemctl enable ollama
+    sudo systemctl start ollama
+    ```
+
+  - 基础配置
+    ```
+    # 配置模型下载目录
+    export OLLAMA_MODELS=/path/to/models
+    echo 'export OLLAMA_MODELS=/path/to/models' >> ~/.bashrc
+
+    # 服务配置
+    export OLLAMA_HOST=0.0.0.0:11434
+    export OLLAMA_NUM_PARALLEL=4
+    ```
+
+  - 快速使用
+    ```
+    ollama run qwen2.5     # 运行 Qwen 2.5
+    ollama run llama3.1    # 运行 Llama 3.1
+
+    # REST API 示例
+    curl http://localhost:11434/api/chat \
+      -d '{"model": "llama3.1", "messages": [{"role": "user", "content": "Hello!"}]}'
+
+    # 常用命令
+    ollama run <model>    # 运行模型
+    ollama pull <model>   # 下载模型
+    ollama list           # 列出本地模型
+    ollama rm <model>     # 删除模型
+    ollama serve          # 启动 API 服务（后台）
+    ```
+
+  - 验证安装
+    ```
+    ollama --version
+    ollama run qwen2.5
+    ```
+
+  - 卸载
+    ```
+    sudo systemctl stop ollama
+    sudo systemctl disable ollama
+    sudo rm /usr/local/bin/ollama
+    sudo rm -rf ~/.ollama
+    sudo rm -rf /usr/local/lib/ollama
+    ```

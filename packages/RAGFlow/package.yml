@@ -1,0 +1,76 @@
+name: RAGFlow
+category: others
+type: 源码安装
+description: Open-source RAG engine based on deep document understanding
+license: Apache-2.0
+homepage: https://github.com/infiniflow/ragflow
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装 Docker CE（需先配置 Docker CE 源）
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+
+    # 其他基础工具
+    sudo dnf install -y git
+
+    # 检查 Docker 环境
+    docker --version
+    # 需要 >= 20.10
+    docker compose version
+    ```
+
+  - 安装
+    ```
+    # 方式一：Docker Compose 部署（推荐）
+    git clone https://github.com/infiniflow/ragflow.git
+    cd ragflow
+    docker compose up -d
+    docker compose logs -f
+
+    # 方式二：指定配置启动（备选）
+    cp .env.example .env
+    # 编辑 .env 后启动
+    docker compose up -d
+    ```
+
+  - 基础配置
+    ```
+    # 编辑 .env 文件
+    OPENAI_API_KEY=sk-xxx
+    RAGFLOW_PORT=9380
+    DOCUMENT_STORAGE_PATH=./data/documents
+    ```
+
+  - 快速使用
+    ```
+    # 通过 Web 界面使用
+    # 1. 登录系统 (admin / admin)
+    # 2. 创建知识库并上传文档
+    # 3. 在对话界面提问测试
+
+    # 常用命令
+    docker compose up -d            # 启动服务
+    docker compose down             # 停止服务
+    docker compose logs -f ragflow-server  # 查看服务日志
+    docker compose restart          # 重启服务
+    ```
+
+  - 验证安装
+    ```
+    # 浏览器访问 http://localhost:9380，默认账号密码为 admin / admin
+    docker compose ps
+    curl http://localhost:9380/api/v1/health
+    ```
+
+  - 卸载说明
+    ```
+    docker compose down -v
+    cd ..
+    rm -rf ragflow/
+    ```

@@ -1,0 +1,68 @@
+name: openai-skills
+category: others
+type: 源码安装
+description: OpenAI official AI agent skills collection for code generation, data analysis and API integration
+license: unknown
+homepage: https://github.com/openai/skills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y nodejs npm git
+    # 或安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # git clone（推荐）
+    git clone https://github.com/openai/skills.git
+    cd skills
+
+    # 本项目技能文件无需编译安装；如需运行构建/测试脚本再执行
+    npm install
+    ```
+
+  - 验证安装
+    ```
+    ls -la
+    # 确认能看到 packages/ 目录及技能文件
+    ls packages/
+    ls packages/*/skill.json 2>/dev/null
+    # 预期输出：列出技能包及配置
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+    export OPENAI_SKILLS_DIR="./skills"
+    ```
+
+  - 快速使用
+    ```
+    # 在 Codex CLI 或其他支持技能加载的 Agent 中引用
+    codex --load-skills ./packages
+    ls packages/
+
+    ls packages/               # 列出所有技能包
+    cat packages/*/README.md   # 查看技能说明
+    npm test                   # 运行测试（如已 npm install）
+    ```
+
+  - 卸载
+    ```
+    cd ..
+    rm -rf skills
+    ```

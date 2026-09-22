@@ -1,0 +1,92 @@
+name: FlowChain
+category: others
+type: 源码安装
+description: Python-based chainable workflow orchestration framework for multi-step data and AI pipelines
+license: NOASSERTION
+homepage: https://github.com/flowchain/flowchain
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    python --version
+    # 需要 >= 3.9
+
+    # 若 Python / pip / 编译工具链不满足，可在 openEuler 上安装
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install flowchain
+    # 或 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ flowchain
+    ```
+
+  - 安装
+    ```
+    # pip 安装（推荐，在虚拟环境中）
+    source .venv/bin/activate
+    pip install flowchain
+    # 国内镜像加速
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ flowchain
+
+    # 备选：uv 安装
+    uv pip install flowchain
+    ```
+
+  - 验证安装
+    ```
+    python -c "import flowchain; print(flowchain.__version__)"
+    # 应输出版本号信息
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    # 或通过 .env 文件
+    echo "OPENAI_API_KEY=sk-your-api-key" > .env
+
+    # 配置文件示例 config.py
+    from flowchain import FlowChainConfig
+
+    config = FlowChainConfig(
+        llm_provider="openai",
+        llm_model="gpt-4o",
+        temperature=0.7,
+        max_retries=3,
+        cache_enabled=True
+    )
+    ```
+
+  - 快速使用
+    ```
+    pip install flowchain              # 基础安装
+    pip install flowchain[llm]         # 安装 LLM 支持
+    python -c "import flowchain"       # 验证导入
+
+    # 基本用法
+    from flowchain import FlowChain
+
+    chain = FlowChain(name="my-workflow")
+
+    @chain.step()
+    def step1(input_data):
+        return {"processed": f"处理数据: {input_data}"}
+
+    @chain.step(depends_on=["step1"])
+    def step2(context):
+        data = context["step1"]["processed"]
+        return {"result": f"最终结果: {data}"}
+
+    result = chain.run("Hello FlowChain!")
+    print(result)
+    ```
+
+  - 卸载
+    ```
+    pip uninstall flowchain -y
+    rm -rf .venv
+    ```

@@ -1,0 +1,76 @@
+name: gpt4free
+category: others
+type: 源码安装
+description: Open-source AI API aggregator with OpenAI-compatible interface
+license: GPL-3.0
+homepage: https://github.com/xtekky/gpt4free
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Python >= 3.8，推荐 >= 3.10）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    ```
+
+  - 安装
+    ```
+    # 方式一：uv 虚拟环境安装（推荐）
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install gpt4free
+
+    # 方式二：pip + 国内镜像安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ gpt4free
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 启动 API 服务（默认端口 8080）
+    python -m g4f.api
+    # 或通过命令行启动
+    g4f run --port 8080
+
+    # 配置文件示例 ~/.g4f/config.json
+    # {
+    #   "api": { "port": 8080, "host": "0.0.0.0" },
+    #   "providers": { "enabled": ["Bing", "You", "Gemini"], "disabled": [] },
+    #   "model": { "default": "gpt-3.5-turbo", "fallback": true }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 列出可用提供商 / 模型
+    g4f list-providers
+    g4f list-models
+
+    # Python 示例
+    # import g4f
+    # response = g4f.ChatCompletion.create(
+    #     model="gpt-3.5-turbo",
+    #     messages=[{"role": "user", "content": "你好"}],
+    # )
+    # print(response)
+    ```
+
+  - 验证安装
+    ```
+    python -c "import g4f; print(g4f.version)"
+    # 应输出版本号
+
+    curl http://localhost:8080/v1/chat/completions \
+      -H "Content-Type: application/json" \
+      -d '{"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "hi"}]}'
+    # 预期：返回模型响应
+    ```
+
+  - 卸载
+    ```
+    pip uninstall gpt4free -y
+    # 删除配置目录
+    rm -rf ~/.g4f
+    ```

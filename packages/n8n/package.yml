@@ -1,0 +1,71 @@
+name: n8n
+category: others
+type: 源码安装
+description: Open-source workflow automation platform with 400+ integrations and built-in AI agent nodes
+license: NOASSERTION
+homepage: https://github.com/n8n-io/n8n
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+
+    # 若 Node.js / npm 不满足，可在 openEuler 上安装
+    sudo dnf install -y nodejs npm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # curl 一键安装（推荐）
+    curl -O https://raw.githubusercontent.com/n8n-io/n8n/master/packages/cli/bin/install.sh
+    chmod +x install.sh
+    sudo ./install.sh
+
+    # 备选：npm 全局安装
+    npm install n8n -g
+    ```
+
+  - 验证安装
+    ```
+    n8n --version
+    # 应输出版本号信息
+    ```
+
+  - 基础配置
+    ```
+    # 配置环境变量
+    export N8N_SECURE_COOKIE=false
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 配置文件 ~/.n8n/config
+    N8N_PORT=5678
+    N8N_HOST=localhost
+    N8N_PROTOCOL=http
+    N8N_ENCRYPTION_KEY=your-encryption-key
+    WEBHOOK_URL=http://localhost:5678/
+    ```
+
+  - 启动 / 快速使用
+    ```
+    n8n start
+    # 浏览器打开 http://localhost:5678
+
+    n8n start                          # 启动服务
+    n8n start --tunnel                 # 启动并创建隧道
+    n8n update                         # 更新 n8n
+    n8n export --all                   # 导出工作流
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g n8n
+    rm -rf ~/.n8n
+    ```

@@ -1,0 +1,83 @@
+name: context-mode
+category: others
+type: 源码安装
+description: Tool for AI context window management, prioritization and compression
+license: NOASSERTION
+homepage: https://github.com/mksglu/context-mode
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install context-mode
+
+    # 或 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ context-mode
+    ```
+
+  - 安装
+    ```
+    # 通过 pip 安装（推荐）
+    pip install context-mode
+    ```
+
+  - 基础配置
+    ```
+    # 配置文件位于 ~/.config/context-mode/config.json
+    {
+      "strategy": "sliding_window",
+      "window_size": 4096,
+      "overlap": 512,
+      "compression": {
+        "enabled": true,
+        "algorithm": "semantic",
+        "ratio": 0.5
+      }
+    }
+    ```
+
+  - 快速使用
+    ```
+    # 作为 Python 库使用
+    from context_mode import ContextManager
+
+    manager = ContextManager(strategy="sliding_window", window_size=4096)
+    context = manager.process(messages)
+
+    # 命令行常用命令
+    context-mode --config config.json       # 使用指定配置
+    context-mode --strategy sliding_window  # 设置策略
+    context-mode --analyze conversation.log # 分析上下文使用
+    context-mode --help                     # 查看帮助
+    ```
+
+  - 验证安装
+    ```
+    python -c "import context_mode; print(context_mode.__version__)"
+    # 应输出版本号
+
+    python -c "
+    from context_mode import ContextManager
+    cm = ContextManager()
+    print('ContextManager initialized:', cm)
+    print('Strategy:', cm.strategy)
+    "
+    # 预期输出：ContextManager 初始化成功
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall context-mode
+    rm -rf ~/.config/context-mode
+    ```

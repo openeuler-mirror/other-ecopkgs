@@ -1,0 +1,109 @@
+name: Qdrant
+category: others
+type: 源码安装
+description: High-performance vector database for AI applications and vector similarity search
+license: Apache-2.0
+homepage: https://github.com/qdrant/qdrant
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    docker --version
+    # 需要 >= 20.10
+
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+    docker --version
+    ```
+
+  - 安装
+    ```
+    # 方式一：Docker 部署（推荐）
+    docker run -d \
+      --name qdrant \
+      -p 6333:6333 \
+      -p 6334:6334 \
+      -v $(pwd)/qdrant_storage:/qdrant/storage \
+      qdrant/qdrant:latest
+    # 6333: REST API 端口；6334: gRPC 端口；qdrant_storage: 数据持久化目录
+
+    # 方式二：二进制安装
+    wget https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-unknown-linux-gnu.tar.gz
+    tar -xzf qdrant-x86_64-unknown-linux-gnu.tar.gz
+    ./qdrant
+    ```
+
+  - 基础配置
+    ```
+    # 创建 qdrant_config.yaml：
+    storage:
+      storage_path: ./storage
+
+    service:
+      grpc_port: 6334
+      http_port: 6333
+
+    telemetry_disabled: true
+
+    log:
+      level: INFO
+    ```
+
+  - 快速使用
+    ```
+    # 使用 REST API 创建 Collection
+    curl -X PUT http://localhost:6333/collections/my_collection \
+      -H "Content-Type: application/json" \
+      -d '{"vectors": {"size": 1536, "distance": "Cosine"}}'
+
+    # 使用 Python 客户端
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ qdrant-client
+
+    from qdrant_client import QdrantClient
+    from qdrant_client.models import VectorParams, Distance, PointStruct
+
+    client = QdrantClient(host="localhost", port=6333)
+    client.create_collection(
+        collection_name="my_collection",
+        vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
+    )
+    client.upsert(
+        collection_name="my_collection",
+        points=[PointStruct(id=1, vector=[0.1] * 1536, payload={"text": "Hello"})],
+    )
+    results = client.search(
+        collection_name="my_collection",
+        query_vector=[0.1] * 1536,
+        limit=5,
+    )
+
+    # 常用命令
+    docker start qdrant          # 启动
+    docker stop qdrant           # 停止
+    docker logs qdrant           # 查看日志
+    docker restart qdrant        # 重启
+    ```
+
+  - 验证安装
+    ```
+    curl http://localhost:6333/healthz
+    # 预期输出：OK
+
+    curl http://localhost:6333/
+    # 应返回版本信息和集群状态
+    ```
+
+  - 卸载
+    ```
+    # 停止并删除容器
+    docker stop qdrant
+    docker rm qdrant
+
+    # 删除数据目录与镜像
+    rm -rf ./qdrant_storage
+    docker rmi qdrant/qdrant:latest
+    ```

@@ -1,0 +1,71 @@
+name: openai-plugins
+category: others
+type: 源码安装
+description: Official OpenAI ChatGPT plugins examples and API specifications
+license: unknown
+homepage: https://github.com/openai/plugins
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # Node.js >= 18（仅运行示例插件时需要，仅获取文件与文档可跳过）
+    sudo dnf install -y nodejs npm
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 本仓库为示例与文档集合，无需编译安装，clone 即可获取
+    git clone https://github.com/openai/plugins.git
+    cd plugins
+    # 如需运行示例插件，安装对应依赖
+    cd examples/example-plugin && npm install
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 如需运行需要 API 的示例插件
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 每个插件需要 ai-plugin.json 描述文件
+    # {
+    #   "schema_version": "v1",
+    #   "name_for_human": "示例插件",
+    #   "name_for_model": "example_plugin",
+    #   "api": {
+    #     "type": "openapi",
+    #     "url": "https://example.com/openapi.yaml"
+    #   },
+    #   "auth": {
+    #     "type": "none"
+    #   }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 进入示例目录并启动本地服务
+    cd examples/example-plugin
+    npm install
+    npm start
+
+    # 测试插件端点
+    curl http://localhost:3000/.well-known/ai-plugin.json
+    ```
+
+  - 验证获取
+    ```
+    ls -la
+    # 应看到 examples/ 和 docs/ 等目录
+    curl http://localhost:3000/.well-known/ai-plugin.json
+    # 预期：返回 JSON 格式的插件 manifest
+    ```
+
+  - 卸载
+    ```
+    rm -rf plugins
+    ```

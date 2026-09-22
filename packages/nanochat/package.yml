@@ -1,0 +1,86 @@
+name: nanochat
+category: others
+type: 源码安装
+description: Lightweight terminal-based AI chat client
+license: MIT
+homepage: https://github.com/karpathy/nanochat
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    python3 --version
+    # 需要 >= 3.8
+
+    # 推荐使用 uv 或 pip 国内镜像加速安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    # 或
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade pip
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ nanochat
+
+    # 方式二：从源码安装
+    git clone https://github.com/nanochat/nanochat.git
+    cd nanochat
+    pip install -e .
+    ```
+
+  - 基础配置
+    ```
+    # 通过环境变量配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 也可创建配置文件 ~/.nanochat/config.json：
+    {
+      "provider": "openai",
+      "model": "gpt-4o",
+      "temperature": 0.7,
+      "max_tokens": 2048,
+      "stream": true,
+      "history_dir": "~/.nanochat/history",
+      "theme": "default"
+    }
+    ```
+
+  - 快速使用
+    ```
+    # 启动交互式会话
+    nanochat
+
+    # 单条消息模式
+    nanochat "请介绍一下Python"
+
+    # 从管道输入
+    echo "解释量子计算" | nanochat
+
+    # 常用命令（交互式会话中）
+    # /help          显示帮助信息
+    # /model gpt-4   切换模型
+    # /clear         清空当前对话
+    # /save <name>   保存当前对话
+    # /quit          退出程序
+    ```
+
+  - 验证安装
+    ```
+    nanochat --version
+    # 应输出版本号信息
+
+    nanochat "你好，请回复'安装成功'"
+    # 预期输出：AI 的正常回复
+    ```
+
+  - 卸载
+    ```
+    pip uninstall nanochat -y
+    rm -rf ~/.nanochat
+    ```

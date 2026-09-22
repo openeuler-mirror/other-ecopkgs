@@ -1,0 +1,75 @@
+name: TensorRT-LLM
+category: others
+type: 源码安装
+description: NVIDIA LLM inference optimization engine for GPU deployment
+license: NOASSERTION
+homepage: https://github.com/NVIDIA/TensorRT-LLM
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    nvidia-smi
+    nvcc --version
+    python --version
+    # Python >= 3.10、CUDA >= 11.8
+
+    sudo dnf install -y python3 python3-pip python3-devel git gcc gcc-c++ make
+    # 如需 GPU 支持，请按 NVIDIA 官方源安装 NVIDIA 驱动与 CUDA 工具包
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    pip install tensorrt-llm
+
+    # 如需国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ tensorrt-llm
+
+    # 方式二：Docker 部署
+    docker run --gpus all -it --rm \
+      -v $(pwd):/workspace \
+      -v ~/.cache/huggingface:/root/.cache/huggingface \
+      nvcr.io/nvidia/tensorrt-llm:latest
+    ```
+
+  - 基础配置
+    ```
+    # 如需访问受限模型
+    export HUGGING_FACE_HUB_TOKEN="hf_xxx"
+    ```
+
+  - 快速使用
+    ```
+    # 将 HuggingFace 模型转换为 TensorRT-LLM 引擎
+    python examples/llama/build.py \
+      --model_dir meta-llama/Meta-Llama-3.1-8B-Instruct \
+      --output_dir ./trt_engines/llama-8b \
+      --dtype float16 \
+      --use_weight_only \
+      --weight_only_precision int4_awq
+
+    # 启动 OpenAI API 兼容服务
+    python examples/llama/openai_server.py \
+      --engine_dir ./trt_engines/llama-8b \
+      --tokenizer_dir meta-llama/Meta-Llama-3.1-8B-Instruct
+
+    # 常用命令
+    python examples/llama/build.py           # 构建引擎
+    python examples/llama/run.py             # 运行推理
+    python examples/llama/openai_server.py   # 启动 API 服务
+    ```
+
+  - 验证安装
+    ```
+    python -c "import tensorrt_llm; print(tensorrt_llm.__version__)"
+    ```
+
+  - 卸载
+    ```
+    pip uninstall tensorrt-llm -y
+    # 注意：依赖的 CUDA 和 TensorRT 需单独卸载
+    ```

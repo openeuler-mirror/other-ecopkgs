@@ -1,0 +1,77 @@
+name: OpenSEO
+category: others
+type: 源码安装
+description: Open-source SEO audit and analysis CLI tool
+license: MIT
+homepage: https://github.com/every-app/open-seo
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Node.js >= 18，推荐 >= 20）
+    sudo dnf install -y nodejs npm
+    node --version
+
+    # 如需安装特定版本，使用 nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 npm 全局安装（推荐）
+    npm install -g open-seo
+
+    # 方式二：从源码安装
+    git clone https://github.com/every-app/open-seo.git
+    cd open-seo
+    npm install
+    npm link
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    open-seo init
+    # 会在当前目录生成 .openseorc.json 配置文件
+
+    # .openseorc.json 示例
+    # {
+    #   "siteUrl": "https://example.com",
+    #   "crawlDepth": 3,
+    #   "output": {
+    #     "format": "html",
+    #     "directory": "./seo-reports"
+    #   }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 运行 SEO 审计
+    open-seo audit https://example.com
+
+    # 快速检查页面
+    open-seo check https://example.com
+
+    # 导出报告
+    open-seo audit https://example.com --output-format html --output ./report.html
+    ```
+
+  - 验证安装
+    ```
+    open-seo --version
+    open-seo audit https://example.com --max-pages 5
+    # 预期：输出页面分析和 SEO 评分
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g open-seo
+    rm .openseorc.json
+    rm -rf seo-reports
+    ```

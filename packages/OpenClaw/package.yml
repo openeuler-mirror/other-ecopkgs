@@ -1,0 +1,80 @@
+name: OpenClaw
+category: others
+type: 源码安装
+description: Open-source personal AI assistant platform
+license: NOASSERTION
+homepage: https://github.com/openclaw/openclaw
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Node.js 版本（需要 >= 22）
+    node --version
+
+    # openEuler 安装 Node.js 与 npm
+    sudo dnf install -y nodejs npm
+
+    # 或使用 nvm 安装最新 LTS
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # 方式一：npm 全局安装（推荐）
+    npm install -g openclaw@latest
+
+    # 方式二：Docker 安装（备选）
+    docker run -it --rm \
+      -p 18789:18789 \
+      -v openclaw_data:/home/node/.openclaw \
+      ghcr.io/openclaw/openclaw:latest
+    ```
+
+  - 初始化配置
+    ```
+    # 运行初始化向导（引导选择 AI 供应商、配置 API Key、连接聊天平台）
+    openclaw onboard --install-daemon
+
+    # 核心配置文件位于 ~/.openclaw/openclaw.json
+    cat ~/.openclaw/openclaw.json
+    # {
+    #   "models": { "providers": { "anthropic": { "apiKey": "sk-ant-xxx" } } },
+    #   "gateway": { "mode": "local", "auth": { "mode": "token" } }
+    # }
+    ```
+
+  - 启动与服务管理
+    ```
+    openclaw gateway start     # 后台启动网关（推荐）
+    openclaw gateway status    # 查看服务状态
+    openclaw dashboard         # 打开 Web 控制台（http://127.0.0.1:18789）
+    openclaw gateway stop      # 停止网关
+    openclaw doctor            # 诊断问题
+    ```
+
+  - 验证安装
+    ```
+    openclaw --version
+    # 应输出版本号信息
+
+    curl http://127.0.0.1:18789/health
+    # 预期输出：包含 "status": "ok"
+    ```
+
+  - 卸载
+    ```
+    # 停止服务
+    openclaw gateway stop
+
+    # 卸载 npm 包
+    npm uninstall -g openclaw
+
+    # 删除配置目录（备份重要配置后再操作）
+    rm -rf ~/.openclaw
+    ```

@@ -1,0 +1,91 @@
+name: OmniRoute
+category: others
+type: 源码安装
+description: Lightweight API routing proxy with load balancing and request rewriting
+license: MIT
+homepage: https://github.com/diegosouzapw/OmniRoute
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Node.js >= 18，推荐 >= 20）
+    sudo dnf install -y nodejs npm git
+
+    # 或通过 nvm 安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+
+    # 配置 npm 国内镜像
+    npm config set registry https://registry.npmmirror.com
+
+    # 验证环境
+    node --version
+    npm --version
+    ```
+
+  - 安装
+    ```
+    # 方式一：npm 全局安装（推荐）
+    npm install -g omni-route
+
+    # 方式二：从源码安装
+    git clone https://github.com/diegosouzapw/OmniRoute.git
+    cd OmniRoute
+    npm install
+    npm link
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    omni-route init
+    # 生成 omni-route.config.json 配置文件
+
+    # omni-route.config.json 示例
+    # {
+    #   "port": 8080,
+    #   "routes": [
+    #     {
+    #       "path": "/api/users",
+    #       "target": "http://user-service:3001",
+    #       "methods": ["GET", "POST"]
+    #     }
+    #   ],
+    #   "middlewares": ["cors", "rate-limit", "request-logger"],
+    #   "logging": { "level": "info", "format": "json" }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 启动路由代理
+    omni-route start
+
+    # 指定配置文件启动
+    omni-route start --config ./omni-route.config.json
+
+    # 查看运行状态 / 停止 / 重新加载配置
+    omni-route status
+    omni-route stop
+    omni-route reload
+    ```
+
+  - 验证安装
+    ```
+    omni-route --version
+    # 应输出版本号信息
+
+    omni-route start
+    curl http://localhost:8080/api/health
+    # 预期：返回上游服务的健康检查响应
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g omni-route
+    # 删除配置目录
+    rm -rf ~/.omni-route
+    ```

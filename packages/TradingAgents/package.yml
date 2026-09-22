@@ -1,0 +1,113 @@
+name: TradingAgents
+category: others
+type: 源码安装
+description: AI-powered quantitative trading agent framework
+license: Apache-2.0
+homepage: https://github.com/TauricResearch/TradingAgents
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    python3 --version
+    # 需要 >= 3.9
+
+    # 推荐使用 uv 创建虚拟环境安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    ```
+
+  - 获取源码并安装
+    ```
+    # 方式一：从源码安装（推荐）
+    git clone https://github.com/trading-agents/trading-agents.git
+    cd trading-agents
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+    pip install -e .
+
+    # 方式二：通过 pip 安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ trading-agents
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export EXCHANGE_API_KEY="your-api-key"
+    export EXCHANGE_SECRET_KEY="your-secret-key"
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 创建 config.yaml：
+    exchange:
+      name: "binance"
+      api_key: "${EXCHANGE_API_KEY}"
+      secret_key: "${EXCHANGE_SECRET_KEY}"
+      testnet: true
+
+    strategy:
+      name: "ma_crossover"
+      params:
+        fast_period: 10
+        slow_period: 30
+
+    ai_assistant:
+      enabled: true
+      provider: "openai"
+      model: "gpt-4o"
+      api_key: "${OPENAI_API_KEY}"
+
+    risk_management:
+      max_position_size: 0.1
+      stop_loss: 0.05
+      take_profit: 0.15
+    ```
+
+  - 快速使用
+    ```
+    from trading_agents import TradingAgent
+    from trading_agents.strategies import MACrossover
+
+    agent = TradingAgent(
+        exchange="binance",
+        strategy=MACrossover(fast=10, slow=30),
+        testnet=True
+    )
+
+    results = agent.backtest(
+        symbol="BTC/USDT",
+        start="2024-01-01",
+        end="2024-06-01",
+        initial_capital=10000
+    )
+    print(f"回测收益率: {results['return_pct']:.2f}%")
+
+    # 常用命令
+    # 运行回测
+    python run_backtest.py --config config.yaml --symbol BTC/USDT
+
+    # 运行实盘（需谨慎）
+    python run_live.py --config config.yaml --symbol BTC/USDT
+    ```
+
+  - 验证安装
+    ```
+    python -c "import trading_agents; print(trading_agents.__version__)"
+
+    python -c "
+    from trading_agents import TradingAgent
+    from trading_agents.strategies import MACrossover
+    agent = TradingAgent(exchange='binance', strategy=MACrossover(), testnet=True)
+    result = agent.backtest('BTC/USDT', '2024-01-01', '2024-01-07', 10000)
+    print('回测成功，收益率:', result['return_pct'], '%')
+    "
+    ```
+
+  - 卸载
+    ```
+    pip uninstall trading-agents -y
+    # 如从源码安装，删除目录
+    rm -rf trading-agents
+    ```

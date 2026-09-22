@@ -1,0 +1,106 @@
+name: AutoGen
+category: others
+type: 源码安装
+description: Microsoft multi-agent conversation framework
+license: CC-BY-4.0
+homepage: https://github.com/microsoft/autogen
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install pyautogen
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ pyautogen
+
+    # 说明：代码执行功能依赖 Docker，需先配置 Docker CE 源
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv autogen-env
+    source autogen-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ pyautogen
+
+    # 如需完整功能
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ pyautogen[all]
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/microsoft/autogen.git
+    cd autogen
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # OpenAI
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # Azure OpenAI（如使用 Azure）
+    export AZURE_OPENAI_API_KEY="your-azure-key"
+    export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com"
+
+    # 创建 OAI_CONFIG_LIST.json 配置文件示例
+    # [
+    #   { "model": "gpt-4o", "api_key": "sk-your-api-key" },
+    #   { "model": "gpt-4o-mini", "api_key": "sk-your-api-key", "tags": ["fast", "cheap"] }
+    # ]
+    ```
+
+  - 快速使用
+    ```
+    import autogen
+
+    llm_config = {
+        "config_list": [{"model": "gpt-4o", "api_key": "sk-your-api-key"}]
+    }
+
+    assistant = autogen.AssistantAgent(
+        name="Assistant",
+        llm_config=llm_config
+    )
+
+    user_proxy = autogen.UserProxyAgent(
+        name="User",
+        human_input_mode="NEVER",
+        code_execution_config={"work_dir": "coding"}
+    )
+
+    user_proxy.initiate_chat(
+        assistant,
+        message="编写一个 Python 脚本来计算斐波那契数列。"
+    )
+    ```
+
+  - 验证安装
+    ```
+    python -c "import autogen; print(autogen.__version__)"
+    # 应输出版本号信息
+
+    python -c "
+    import autogen
+    print('AutoGen version:', autogen.__version__)
+    print('AutoGen installed successfully!')
+    "
+    ```
+
+  - 卸载
+    ```
+    pip uninstall pyautogen -y
+    ```

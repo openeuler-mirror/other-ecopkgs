@@ -1,0 +1,95 @@
+name: n8n MCP Bridge
+category: others
+type: 源码安装
+description: MCP bridge connecting n8n workflow engine with AI agents
+license: MIT
+homepage: https://github.com/czlonkowski/n8n-mcp
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Node.js >= 18，推荐 >= 20）
+    sudo dnf install -y nodejs npm git
+
+    # 或通过 nvm 安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+
+    # 配置 npm 国内镜像
+    npm config set registry https://registry.npmmirror.com
+
+    # 验证环境
+    node --version
+    npm --version
+    ```
+
+  - 安装
+    ```
+    # 方式一：npm 全局安装（推荐）
+    npm install -g n8n-mcp
+
+    # 方式二：从源码安装
+    git clone https://github.com/n8n-io/n8n-mcp.git
+    cd n8n-mcp
+    npm install
+    npm run build
+    npm link
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 配置 n8n 连接
+    export N8N_HOST="http://localhost:5678"
+    export N8N_API_KEY="your-n8n-api-key"
+
+    # 设置 AI 模型 API Key
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+    # 或
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 配置文件示例 ~/.n8n-mcp/config.yaml
+    # n8n:
+    #   host: "http://localhost:5678"
+    #   api_key: "${N8N_API_KEY}"
+    # mcp:
+    #   transport: "stdio"
+    #   protocol_version: "2025-03-26"
+    # ai:
+    #   provider: "anthropic"
+    #   model: "claude-sonnet-4-20250514"
+    #   api_key: "${ANTHROPIC_API_KEY}"
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 启动 MCP Bridge
+    n8n-mcp start
+
+    # 列出可用的 n8n 工作流
+    n8n-mcp list-workflows
+
+    # 查看桥接状态 / 停止
+    n8n-mcp status
+    n8n-mcp stop
+    ```
+
+  - 验证安装
+    ```
+    n8n-mcp --version
+    # 应输出版本号信息
+
+    n8n-mcp start
+    n8n-mcp status
+    # 预期：显示 Connected 状态
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g n8n-mcp
+    # 删除配置目录
+    rm -rf ~/.n8n-mcp
+    ```

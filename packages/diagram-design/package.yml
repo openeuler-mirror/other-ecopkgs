@@ -1,0 +1,75 @@
+name: diagram-design
+category: others
+type: 源码安装
+description: AI agent skills and templates for creating diagrams with Mermaid and PlantUML
+license: MIT
+homepage: https://github.com/cathrynlavery/diagram-design
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Node.js / npm 版本
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y nodejs npm git
+
+    # 或安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 获取源码 / 安装
+    ```
+    git clone https://github.com/cathrynlavery/diagram-design.git
+    cd diagram-design
+
+    # 本项目技能文件无需编译安装；如需运行生成脚本，再执行
+    npm install
+    ```
+
+  - 基础配置
+    ```
+    # 配置文件示例 diagram.config.json
+    {
+      "default_format": "mermaid",
+      "theme": "default",
+      "output_dir": "./diagrams",
+      "diagram_types": {
+        "flowchart": { "enabled": true, "direction": "TD" },
+        "classDiagram": { "enabled": true },
+        "sequenceDiagram": { "enabled": true }
+      }
+    }
+    ```
+
+  - 快速使用
+    ```
+    ls templates/           # 查看图表模板
+    cat templates/*.md      # 查看所有模板
+    cat templates/flowchart-template.md   # 将模板应用到 Agent 提示中
+    npm run generate        # 生成示例图表（如已 npm install）
+    ```
+
+  - 验证安装
+    ```
+    ls -la
+    # 确认项目文件结构
+    ls templates/
+    ls output/ 2>/dev/null
+    # 预期输出：列出模板文件及生成的图表
+    ```
+
+  - 卸载说明
+    ```
+    cd ..
+    rm -rf diagram-design
+    ```

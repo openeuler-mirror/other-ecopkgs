@@ -1,0 +1,78 @@
+name: GeminiCLI
+category: others
+type: 源码安装
+description: Google Gemini command-line client for chatting, code generation and multimodal input in terminal
+license: Apache-2.0
+homepage: https://github.com/google-gemini/gemini-cli
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 若 Node.js / npm 不满足，可在 openEuler 上安装
+    sudo dnf install -y nodejs npm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # npm 全局安装（推荐）
+    npm install -g @google/gemini-cli
+
+    # 备选：通过 npx 直接使用
+    npx @google/gemini-cli
+    ```
+
+  - 验证安装
+    ```
+    gemini --version
+    # 应输出版本号信息
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key（访问 https://aistudio.google.com/apikey 创建）
+    export GEMINI_API_KEY="your-api-key-here"
+    # 或写入配置文件
+    gemini config set api-key your-api-key-here
+
+    # 配置文件 ~/.config/gemini-cli/config.json
+    {
+      "apiKey": "your-api-key-here",
+      "model": "gemini-2.0-flash",
+      "temperature": 0.7,
+      "maxOutputTokens": 4096,
+      "history": { "enabled": true, "maxSessions": 50 }
+    }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    gemini
+    # 单次问答
+    gemini "解释一下什么是RESTful API"
+    # 从管道输入
+    cat main.py | gemini "解释这段代码的功能"
+
+    gemini "问题"                       # 单次问答
+    gemini --model gemini-2.0-pro      # 指定模型
+    gemini history                     # 查看历史会话
+    gemini config set key value        # 设置配置项
+    gemini --help                      # 查看帮助
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g @google/gemini-cli
+    rm -rf ~/.config/gemini-cli
+    ```

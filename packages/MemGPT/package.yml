@@ -1,0 +1,70 @@
+name: MemGPT
+category: others
+type: 源码安装
+description: Virtual context management letting LLMs break fixed context window limits
+license: Apache-2.0
+homepage: https://github.com/cpacker/MemGPT
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.9
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 uv 安装（推荐）
+    uv venv .venv && source .venv/bin/activate
+    uv pip install memgpt
+
+    # 方式二：通过 pip 安装（备选）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ memgpt
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+    # 或使用本地模型（如 Ollama）
+    export MEMGPT_BACKEND="ollama"
+    export OLLAMA_BASE_URL="http://localhost:11434"
+
+    # 初始化配置
+    memgpt configure
+    # 手动配置文件位于 ~/.memgpt/config
+    ```
+
+  - 快速使用
+    ```
+    # 交互式聊天
+    memgpt run
+    memgpt run --agent my_assistant
+
+    # 常用命令
+    memgpt run              # 启动交互式对话
+    memgpt configure        # 运行配置向导
+    memgpt list agents      # 列出所有 Agent
+    ```
+
+  - 验证安装
+    ```
+    memgpt --version
+
+    memgpt run
+    # 在交互界面输入 "What is my name?" 验证记忆功能
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall memgpt -y
+    rm -rf ~/.memgpt
+    ```

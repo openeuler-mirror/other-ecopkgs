@@ -1,0 +1,86 @@
+name: nanobot
+category: others
+type: 源码安装
+description: Lightweight AI bot framework for building custom AI assistants
+license: MIT
+homepage: https://github.com/HKUDS/nanobot
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install nanobot
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ nanobot
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv nanobot-env
+    source nanobot-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ nanobot
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/nanobot/nanobot.git
+    cd nanobot
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # 配置环境变量
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 创建 config.yaml 配置文件示例
+    # bot:
+    #   name: my-nanobot
+    #   provider: openai
+    #   model: gpt-4o-mini
+    # plugins:
+    #   enabled:
+    #     - echo
+    #     - weather
+    #     - calculator
+    # logging:
+    #   level: INFO
+    ```
+
+  - 快速使用
+    ```
+    nanobot start              # 启动服务
+    nanobot stop               # 停止服务
+    nanobot chat               # 交互式聊天
+    nanobot plugin list        # 列出插件
+    nanobot config show        # 查看配置
+    ```
+
+  - 验证安装
+    ```
+    nanobot --version
+    # 应输出版本号信息
+
+    nanobot chat
+    # 发送测试消息，nanobot 应返回问候信息
+    ```
+
+  - 卸载
+    ```
+    pip uninstall nanobot -y
+
+    # 删除配置目录
+    rm -rf ~/.nanobot
+    ```

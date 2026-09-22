@@ -1,0 +1,80 @@
+name: Mem0
+category: others
+type: 源码安装
+description: Intelligent memory layer providing persistent, retrievable memory for AI agents
+license: Apache-2.0
+homepage: https://github.com/mem0ai/mem0
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.8
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 uv 安装（推荐）
+    uv venv .venv && source .venv/bin/activate
+    uv pip install mem0ai
+
+    # 方式二：通过 pip 安装（备选）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ mem0ai
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+
+    # 代码配置方式
+    from mem0 import Memory
+
+    config = {
+        "embedding": {
+            "provider": "openai",
+            "model": "text-embedding-3-small",
+        }
+    }
+    memory = Memory.from_config(config)
+    ```
+
+  - 快速使用
+    ```
+    # 基本用法
+    from mem0 import Memory
+
+    memory = Memory()
+    result = memory.add(
+        messages=[{"role": "user", "content": "Hi, I'm Alice"}],
+        user_id="alice",
+    )
+    results = memory.search(query="What is the user's name?", user_id="alice")
+    print(results)
+
+    # 常用方法
+    memory.add(messages, user_id)    # 添加记忆
+    memory.search(query, user_id)    # 搜索记忆
+    memory.get_all(user_id)          # 获取所有记忆
+    memory.delete(memory_id)         # 删除特定记忆
+    ```
+
+  - 验证安装
+    ```
+    python -c "import mem0; print(mem0.__version__)"
+
+    pytest tests/ -v
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall mem0ai -y
+    ```

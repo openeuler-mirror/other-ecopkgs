@@ -1,0 +1,71 @@
+name: Jan
+category: others
+type: 源码安装
+description: Open-source offline AI desktop client with local model management
+license: NOASSERTION
+homepage: https://github.com/janhq/jan
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 需 glibc 2.27+
+    uname -a
+    nvidia-smi
+
+    sudo dnf install -y nodejs npm
+    ```
+
+  - 安装
+    ```
+    # 方式一：AppImage 安装（推荐）
+    # 从 GitHub Releases 下载 AppImage：
+    # https://github.com/janhq/jan/releases
+    chmod +x jan-linux-x86_64.AppImage
+    ./jan-linux-x86_64.AppImage
+
+    # 方式二：通过 npm 安装
+    npm install -g jan
+    jan
+    ```
+
+  - 基础配置
+    ```
+    # 配置文件位于 ~/jan/config.json
+    # 首次启动时选择模型存储目录（默认 ~/jan/models）
+    ```
+
+  - 快速使用
+    ```
+    # 启动 API 服务（后台）
+    jan serve
+
+    # 使用 API
+    curl http://localhost:1337/v1/chat/completions \
+      -H "Content-Type: application/json" \
+      -d '{"model": "llama3.2-3b", "messages": [{"role": "user", "content": "Hello!"}]}'
+
+    # 常用命令
+    jan                     # 启动桌面应用
+    jan serve               # 启动 API 服务
+    jan --data-dir <path>   # 指定数据目录
+    ```
+
+  - 验证安装
+    ```
+    jan --version
+    ```
+
+  - 卸载
+    ```
+    # npm 方式
+    npm uninstall -g jan
+    rm -rf ~/jan
+
+    # AppImage 方式：直接删除 AppImage 文件及数据目录
+    rm -f jan-linux-x86_64.AppImage
+    rm -rf ~/jan
+    ```

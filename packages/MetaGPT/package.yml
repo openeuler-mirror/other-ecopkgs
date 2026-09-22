@@ -1,0 +1,101 @@
+name: MetaGPT
+category: others
+type: 源码安装
+description: Multi-agent framework that simulates a software company
+license: MIT
+homepage: https://github.com/FoundationAgents/MetaGPT
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install metagpt
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ metagpt
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv metagpt-env
+    source metagpt-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ metagpt
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/FoundationAgents/MetaGPT.git
+    cd MetaGPT
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # OpenAI
+    export OPENAI_API_KEY="sk-your-api-key"
+    export OPENAI_API_MODEL="gpt-4o"
+
+    # 创建 ~/.metagpt/config.yaml 配置文件示例
+    # llm:
+    #   api_type: openai
+    #   model: gpt-4o
+    #   api_key: sk-your-api-key
+    # context:
+    #   max_token: 8192
+    # repository:
+    #   type: git
+    #   path: ./workspace
+    ```
+
+  - 快速使用
+    ```
+    # 从需求描述生成项目
+    metagpt "创建一个贪吃蛇游戏的 Python 实现"
+
+    # 也可通过 Python API 调用
+    from metagpt.software_company import SoftwareCompany
+    from metagpt.roles import (
+        ProductManager,
+        Architect,
+        ProjectManager,
+        Engineer
+    )
+
+    company = SoftwareCompany()
+    company.hire([
+        ProductManager(),
+        Architect(),
+        ProjectManager(),
+        Engineer()
+    ])
+
+    company.start_project("创建一个贪吃蛇游戏的 Python 实现")
+    ```
+
+  - 验证安装
+    ```
+    python -c "import metagpt; print(metagpt.__version__)"
+    # 应输出版本号信息
+
+    metagpt "编写一个打印 Hello World 的 Python 脚本"
+    # 观察 MetaGPT 各角色的协作过程
+    ```
+
+  - 卸载
+    ```
+    pip uninstall metagpt -y
+
+    # 删除配置目录
+    rm -rf ~/.metagpt
+    ```

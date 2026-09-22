@@ -1,0 +1,76 @@
+name: OpenCode
+category: others
+type: 源码安装
+description: Terminal AI coding assistant by SST for writing, refactoring and understanding code with Git integration
+license: MIT
+homepage: https://github.com/sst/opencode
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 若 Node.js / npm 不满足，可在 openEuler 上安装
+    sudo dnf install -y nodejs npm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # npm 全局安装（推荐）
+    npm install -g @opencode/cli
+
+    # 备选：通过 npx 直接使用
+    npx @opencode/cli
+    ```
+
+  - 验证安装
+    ```
+    opencode --version
+    # 应输出版本号
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key（建议添加到 ~/.bashrc）
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+    export OPENAI_API_KEY="sk-xxx"
+
+    # 配置文件 ~/.config/opencode/config.json
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "maxTokens": 4096,
+      "gitIntegration": true,
+      "theme": "dark"
+    }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    opencode
+    # 单次问答
+    opencode "解释一下 Go 语言的 goroutine 是什么"
+
+    opencode                          # 启动交互模式
+    opencode "问题"                   # 单次问答
+    opencode --model gpt-4o          # 指定模型
+    opencode --clear                 # 清除对话历史
+    opencode --help                  # 查看帮助
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g @opencode/cli
+    rm -rf ~/.config/opencode
+    ```

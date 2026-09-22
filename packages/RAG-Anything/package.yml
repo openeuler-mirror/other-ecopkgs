@@ -1,0 +1,92 @@
+name: RAG-Anything
+category: others
+type: 源码安装
+description: Universal RAG system for building knowledge question-answering over multi-source data
+license: MIT
+homepage: https://github.com/HKUDS/RAG-Anything
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    python --version
+    # 需要 >= 3.9
+
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    uv pip install "rag-anything[all]"
+
+    # 或使用 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ "rag-anything[all]"
+
+    # 方式二：从源码安装
+    git clone https://github.com/HKUDS/RAG-Anything.git
+    cd RAG-Anything
+    pip install -e ".[all]"
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-xxx"
+
+    # 创建 config.yml：
+    llm:
+      provider: openai
+      model: gpt-4o
+      temperature: 0.7
+
+    embedding:
+      provider: openai
+      model: text-embedding-3-small
+
+    server:
+      host: "0.0.0.0"
+      port: 8000
+
+    sources:
+      - type: web
+        urls:
+          - "https://example.com/docs"
+    ```
+
+  - 快速使用
+    ```
+    # 启动服务
+    rag-anything serve --config config.yml
+
+    # 使用 Python API
+    from rag_anything import RAGAnything
+
+    rag = RAGAnything(config_path="config.yml")
+    rag.add_source("https://en.wikipedia.org/wiki/Artificial_intelligence")
+    rag.build_index()
+    response = rag.query("What is artificial intelligence?")
+    print(response.answer)
+
+    # 常用命令
+    rag-anything serve            # 启动服务
+    rag-anything chat             # 交互式对话
+    rag-anything add-source <url> # 添加数据源
+    rag-anything rebuild          # 重建索引
+    ```
+
+  - 验证安装
+    ```
+    python -c "import rag_anything; print(rag_anything.__version__)"
+    # 应输出版本号
+    ```
+
+  - 卸载
+    ```
+    pip uninstall rag-anything -y
+    ```

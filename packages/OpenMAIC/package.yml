@@ -1,0 +1,91 @@
+name: OpenMAIC
+category: others
+type: 源码安装
+description: Open multi-agent intelligence collaboration framework from Tsinghua University
+license: MIT
+homepage: https://github.com/THU-MAIC/OpenMAIC
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y nodejs npm git gcc gcc-c++ make
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+
+    # 检查版本
+    node --version
+    # 需要 >= 18
+    npm --version
+    ```
+
+  - 获取源码并安装
+    ```
+    # 方式一：git clone + npm install（推荐）
+    git clone https://github.com/THU-MAIC/OpenMAIC.git
+    cd OpenMAIC
+    npm install
+
+    # 方式二：分步安装（备选）
+    git clone https://github.com/THU-MAIC/OpenMAIC.git
+    cd OpenMAIC
+    npm install
+    npm run build
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+
+    # 配置文件示例 maic.config.json
+    {
+      "agents": {
+        "planner": {
+          "provider": "openai",
+          "model": "gpt-4o",
+          "role": "planner"
+        },
+        "coder": {
+          "provider": "anthropic",
+          "model": "claude-sonnet-4-20250514",
+          "role": "coder"
+        }
+      },
+      "collaboration": {
+        "protocol": "debate",
+        "max_rounds": 5
+      }
+    }
+    ```
+
+  - 快速使用
+    ```
+    npm start
+    # 启动多 Agent 系统
+
+    npm start                          # 启动多 Agent 系统
+    npm run dev                        # 开发模式
+    npm test                           # 运行测试
+    npm run build                      # 构建项目
+    ```
+
+  - 验证安装
+    ```
+    npm test
+
+    npm run example
+    # 或
+    npm test
+    ```
+
+  - 卸载说明
+    ```
+    cd ..
+    rm -rf OpenMAIC
+    ```

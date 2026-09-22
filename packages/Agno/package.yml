@@ -1,0 +1,101 @@
+name: Agno
+category: others
+type: 源码安装
+description: Framework for building and orchestrating large-scale AI agents
+license: Apache-2.0
+homepage: https://github.com/agno-agi/agno
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install agno
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ agno
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv agno-env
+    source agno-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ agno
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/agno-agi/agno.git
+    cd agno
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # OpenAI
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # Agno API（可选，用于托管服务）
+    export AGNO_API_KEY="your-agno-api-key"
+
+    # 或创建 agent.py 配置文件示例
+    from agno.agent import Agent
+    from agno.models.openai import OpenAIChat
+
+    agent = Agent(
+        name="My Agent",
+        model=OpenAIChat(id="gpt-4o"),
+        instructions=["你是一个有用的 AI 助手。"],
+        add_history_to_messages=True,
+        markdown=True,
+    )
+    ```
+
+  - 快速使用
+    ```
+    from agno.agent import Agent
+    from agno.models.openai import OpenAIChat
+
+    agent = Agent(
+        model=OpenAIChat(id="gpt-4o"),
+        markdown=True
+    )
+
+    agent.print_response("介绍一下你自己", stream=True)
+    ```
+
+  - 验证安装
+    ```
+    python -c "import agno; print(agno.__version__)"
+    # 应输出版本号信息
+
+    python -c "
+    from agno.agent import Agent
+    from agno.models.openai import OpenAIChat
+
+    agent = Agent(
+        model=OpenAIChat(id='gpt-4o-mini'),
+        markdown=False
+    )
+    agent.print_response('Say hello')
+    print('Agno is working!')
+    "
+    ```
+
+  - 卸载
+    ```
+    pip uninstall agno -y
+
+    # 删除配置目录
+    rm -rf ~/.agno
+    ```

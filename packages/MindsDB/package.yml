@@ -1,0 +1,69 @@
+name: MindsDB
+category: others
+type: 源码安装
+description: Open-source in-database AI platform to build and deploy ML models via SQL
+license: MIT
+homepage: https://github.com/mindsdb/mindsdb
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Python >= 3.9，推荐 >= 3.10）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    ```
+
+  - 安装
+    ```
+    # 方式一：uv 虚拟环境安装（推荐）
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install mindsdb
+
+    # 方式二：pip + 国内镜像安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ mindsdb
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 启动 MindsDB（默认运行在 http://127.0.0.1:47334）
+    python -m mindsdb
+
+    # 配置存储目录
+    export MINDSDB_STORAGE_DIR="~/mindsdb"
+
+    # 配置 API Key（如使用外部 AI 模型）
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 覆盖端口（如端口被占用）
+    export MINDSDB_HTTP_PORT=47336
+    export MINDSDB_MYSQL_PORT=47337
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 启动 MindsDB 服务
+    python -m mindsdb
+
+    # 使用 Docker 启动
+    docker run -p 47334:47334 -p 47335:47335 mindsdb/mindsdb
+
+    # 查看帮助
+    python -m mindsdb --help
+    ```
+
+  - 验证安装
+    ```
+    python -c "import mindsdb; print(mindsdb.__version__)"
+    # 应输出版本号
+    ```
+
+  - 卸载
+    ```
+    pip uninstall mindsdb -y
+    # 删除存储目录
+    rm -rf ~/mindsdb
+    ```

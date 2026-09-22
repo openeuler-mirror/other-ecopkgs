@@ -1,0 +1,56 @@
+name: marketing-skills
+category: others
+type: 源码安装
+description: AI agent marketing skill set for copywriting, SEO, social media and advertising
+license: MIT
+homepage: https://github.com/coreyhaines31/marketingskills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 本项目为技能文件集合，不要求特定运行时环境，只需 Git
+    sudo dnf install -y git
+    git --version
+    # 需要 >= 2.0
+    ```
+
+  - 获取源码
+    ```
+    git clone https://github.com/coreyhaines31/marketingskills.git
+    cd marketingskills
+    ```
+
+  - 基础配置
+    ```
+    # 在 AI Agent 中引用技能文件，例如在 Cline 的 .clinerules 中：
+    # 参考 skills/copywriting.md 来指导文案写作
+    # 参考 skills/seo-strategy.md 来提供 SEO 建议
+    ```
+
+  - 快速使用
+    ```
+    cat skills/copywriting.md
+    # 将内容复制到 AI 对话中
+
+    ls skills/                 # 列出所有营销技能
+    cat skills/seo-strategy.md # 查看 SEO 策略
+    grep -r "keyword" skills/  # 搜索特定内容
+    ```
+
+  - 验证安装
+    ```
+    ls -la
+    # 确认能看到技能文件
+    ls skills/*.md | head -5
+    # 预期输出：列出技能文件
+    ```
+
+  - 卸载说明
+    ```
+    cd ..
+    rm -rf marketingskills
+    ```

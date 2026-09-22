@@ -1,0 +1,72 @@
+name: last30days-skill
+category: others
+type: 源码安装
+description: AI agent memory skill for tracking last 30 days of interactions
+license: MIT
+homepage: https://github.com/mvanhorn/last30days-skill
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Python >= 3.8，推荐 >= 3.10）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    python3 --version
+
+    # 推荐使用 uv 或 pip 国内镜像
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    # 或
+    pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ last30days-skill
+
+    # 方式二：从源码安装
+    git clone https://github.com/mvanhorn/last30days-skill.git
+    cd last30days-skill
+    pip install -e .
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 创建 ~/.last30days/config.yaml
+    memory:
+      retention_days: 30
+      storage_path: "~/.last30days/memory.db"
+      auto_cleanup: true
+
+    agent:
+      enable_context_injection: true
+      max_context_items: 50
+
+    logging:
+      level: "info"
+      file: "~/.last30days/logs/agent.log"
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 命令行用法
+    last30days status                       # 查看记忆状态
+    last30days cleanup                      # 清理过期记忆
+    last30days export --output memory_backup.json
+    last30days summary                      # 查看今日活动摘要
+    ```
+
+  - 验证安装
+    ```
+    python -c "import last30days_skill; print('安装成功')"
+    ```
+
+  - 卸载
+    ```
+    pip uninstall last30days-skill -y
+    rm -rf ~/.last30days
+    ```

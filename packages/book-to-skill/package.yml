@@ -1,0 +1,77 @@
+name: book-to-skill
+category: others
+type: 源码安装
+description: Turn books and documents into structured skills for AI agents
+license: MIT
+homepage: https://github.com/virgiliojr94/book-to-skill
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # 创建虚拟环境
+    uv venv .venv && source .venv/bin/activate
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 uv 安装（推荐）
+    uv pip install book-to-skill
+
+    # 方式二：通过 pip 安装（备选）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ book-to-skill
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-xxx"
+    # 或
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+
+    # 配置文件位于 ~/.config/book-to-skill/config.json
+    {
+      "provider": "openai",
+      "model": "gpt-4o",
+      "temperature": 0.3,
+      "input_format": ["pdf", "epub", "md", "txt"],
+      "output": {
+        "format": "markdown",
+        "skill_template": "default",
+        "output_dir": "./output-skills"
+      }
+    }
+    ```
+
+  - 快速使用
+    ```
+    book-to-skill ./my-book.pdf -o ./skills
+
+    book-to-skill book.pdf -o ./skills              # 转换 PDF 书籍
+    book-to-skill book.epub --format markdown       # 转换 EPUB
+    book-to-skill --list-models                     # 列出可用模型
+    book-to-skill --help                            # 查看帮助
+    ```
+
+  - 验证安装
+    ```
+    book-to-skill --version
+    # 应输出版本号
+
+    echo "This is a test book content." > test-book.md
+    book-to-skill test-book.md -o ./test-output
+    ls ./test-output/
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall book-to-skill
+    rm -rf ~/.config/book-to-skill
+    ```

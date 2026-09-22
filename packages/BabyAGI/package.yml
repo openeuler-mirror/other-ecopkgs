@@ -1,0 +1,86 @@
+name: BabyAGI
+category: others
+type: 源码安装
+description: Task-driven autonomous AI agent system
+license: unknown
+homepage: https://github.com/yoheinakajima/babyagi
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.8）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install -r babyagi/requirements.txt
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+    ```
+
+  - 安装
+    ```
+    # 方式一：git clone + pip install（推荐）
+    python -m venv babyagi-env
+    source babyagi-env/bin/activate
+    git clone https://github.com/yoheinakajima/babyagi.git
+    cd babyagi
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+
+    # 方式二：直接下载（备选）
+    curl -LO https://github.com/yoheinakajima/babyagi/archive/refs/heads/main.zip
+    unzip main.zip
+    cd babyagi-main
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+    ```
+
+  - 基础配置
+    ```
+    # 复制环境变量文件并编辑
+    cp .env.example .env
+
+    # .env 文件内容示例
+    # OPENAI_API_KEY=sk-your-api-key   # OpenAI API Key
+    # OPENAI_API_MODEL=gpt-4o          # 模型配置
+    # OBJECTIVE=完成用户指定的目标      # 任务目标
+    # VECTOR_DB=chroma                 # 向量数据库（默认使用 Chroma）
+    # MAX_ITERATIONS=100               # 最大迭代次数
+    # FIRST_TASK=研究 AI Agent 的最新进展
+    # LLM_MODEL=gpt-4o-mini            # LLM 模型
+    ```
+
+  - 快速使用
+    ```
+    # 直接运行
+    python babyagi.py
+
+    # 或指定目标运行
+    export OBJECTIVE="研究 2026 年 AI Agent 技术趋势"
+    python babyagi.py
+    ```
+
+  - 验证安装
+    ```
+    python babyagi.py --help
+    # 应显示帮助信息
+
+    export OBJECTIVE="列出 3 个 AI 框架的名称"
+    export MAX_ITERATIONS=3
+    python babyagi.py
+    # 观察任务生成和执行过程
+    ```
+
+  - 卸载
+    ```
+    # 删除项目目录即可
+    rm -rf babyagi
+    ```

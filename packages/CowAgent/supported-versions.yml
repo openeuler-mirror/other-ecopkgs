@@ -1,0 +1,4 @@
+24.03-LTS-Next:
+    v0.0.3-desktop-test:
+        - x86_64
+        - aarch64

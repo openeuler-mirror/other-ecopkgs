@@ -1,0 +1,73 @@
+name: OpenMetadata
+category: others
+type: 源码安装
+description: Open-source data discovery, lineage and governance platform
+license: Apache-2.0
+homepage: https://github.com/open-metadata/OpenMetadata
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 安装 Docker CE（Docker >= 20.10，推荐 >= 24.0）
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+
+    # 验证环境
+    docker --version
+    docker compose version
+
+    # Elasticsearch 启动失败时，增加系统内存映射限制
+    sudo sysctl -w vm.max_map_count=262144
+    ```
+
+  - 安装
+    ```
+    # Docker 部署（推荐）
+    git clone https://github.com/open-metadata/OpenMetadata.git
+    cd OpenMetadata/docker
+    docker compose up -d
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 环境变量
+    export OPENMETADATA_SERVER_URL="http://localhost:8585"
+    export AIRFLOW_HOST="http://airflow:8080"
+
+    # 安装数据采集工具
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ openmetadata-ingestion
+
+    # 运行数据采集
+    docker compose exec ingestion python -m metadata.ingestion.run -c ./config/mysql.json
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 浏览器打开 http://localhost:8585，首次访问自动进入初始化流程创建管理员账号
+
+    # 查看服务日志
+    docker compose logs -f openmetadata
+
+    # 备份数据库
+    docker compose exec mysql mysqldump -u root -p openmetadata_db > backup.sql
+    ```
+
+  - 验证安装
+    ```
+    docker compose ps
+    # 预期：所有容器均为 Up 状态
+
+    curl http://localhost:8585/api/v1/health
+    # 预期：返回健康检查信息
+    ```
+
+  - 卸载
+    ```
+    docker compose down -v
+    docker rmi openmetadata/server openmetadata/ingestion openmetadata/db openmetadata/elastic-search
+    rm -rf OpenMetadata
+    ```

@@ -1,0 +1,79 @@
+name: DeepSeekHarness
+category: others
+type: 源码安装
+description: Model evaluation and benchmarking framework for DeepSeek models
+license: MIT
+homepage: https://github.com/deepseek-ai/deepseek-harness
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Node.js 版本（需要 >= 18）
+    node --version
+    npm --version   # 需要 >= 8
+
+    # openEuler 安装 Node.js 与 npm
+    sudo dnf install -y nodejs npm
+
+    # 或使用 nvm 安装最新 LTS
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # 方式一：npm 全局安装（推荐）
+    npm install -g @deepseek/harness
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/deepseek-ai/deepseek-harness.git
+    cd deepseek-harness
+    npm install
+    npm run build
+    npm link
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export DEEPSEEK_API_KEY="your-deepseek-api-key"
+
+    # 创建 harness.config.json 配置文件示例
+    # {
+    #   "model": "deepseek-chat",
+    #   "api_base": "https://api.deepseek.com",
+    #   "tasks": ["mmlu", "ceval", "gsm8k"],
+    #   "output_dir": "./results",
+    #   "max_tokens": 2048,
+    #   "temperature": 0.7
+    # }
+    ```
+
+  - 快速使用
+    ```
+    deepseek-harness run --config harness.config.json   # 运行基准测试
+    deepseek-harness list-tasks                          # 列出可用测试任务
+    deepseek-harness report                              # 生成评估报告
+    ```
+
+  - 验证安装
+    ```
+    deepseek-harness --version
+    # 应输出版本号信息
+
+    deepseek-harness list-tasks
+    deepseek-harness run --task mmlu --model deepseek-chat
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g @deepseek/harness
+
+    # 删除配置文件
+    rm -rf ~/.deepseek-harness
+    ```

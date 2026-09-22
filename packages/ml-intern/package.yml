@@ -1,0 +1,95 @@
+name: ml-intern
+category: others
+type: 源码安装
+description: Machine learning intern toolkit by Hugging Face for training and evaluation
+license: Apache-2.0
+homepage: https://github.com/huggingface/ml-intern
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    python3 --version
+    # 需要 >= 3.8
+
+    # 推荐使用 uv 创建虚拟环境并配置国内镜像
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ ml-intern
+
+    # 方式二：从源码安装
+    git clone https://github.com/huggingface/ml-intern.git
+    cd ml-intern
+    pip install -e .
+    ```
+
+  - 基础配置
+    ```
+    # 配置 Hugging Face Token
+    huggingface-cli login
+    # 按提示输入 Access Token
+
+    # 或通过环境变量设置
+    export HF_TOKEN="your-hf-token"
+    export HF_ENDPOINT="https://hf-mirror.com"  # 国内镜像加速
+
+    # 配置文件 ~/.ml_intern/config.yaml：
+    hf:
+      token: "${HF_TOKEN}"
+      cache_dir: "~/.cache/huggingface"
+
+    defaults:
+      task: "text-classification"
+      model: "bert-base-uncased"
+      dataset: "imdb"
+      output_dir: "./output"
+
+    training:
+      batch_size: 8
+      epochs: 3
+      learning_rate: 2e-5
+      device: "auto"
+    ```
+
+  - 快速使用
+    ```
+    # 查看可用命令
+    ml-intern --help
+
+    # 初始化新项目
+    ml-intern init my-ml-project
+
+    # 运行训练
+    ml-intern train --task text-classification --model bert-base-uncased --dataset imdb
+
+    # 常用命令
+    # ml-intern init          初始化 ML 项目
+    # ml-intern train         运行模型训练
+    # ml-intern evaluate      评估模型性能
+    # ml-intern push-to-hub   推送模型到 Hugging Face Hub
+    ```
+
+  - 验证安装
+    ```
+    ml-intern --version
+    python -c "import ml_intern; print(ml_intern.__version__)"
+
+    ml-intern train --task text-classification --model distilbert-base-uncased --dataset imdb --epochs 1 --max-samples 100
+    # 预期：训练成功并输出准确率
+    ```
+
+  - 卸载
+    ```
+    pip uninstall ml-intern -y
+    rm -rf ~/.ml_intern
+    ```

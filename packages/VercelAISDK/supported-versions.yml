@@ -1,0 +1,4 @@
+24.03-LTS-Next:
+    "@ai-sdk/workflow-harness@1.0.119":
+        - x86_64
+        - aarch64

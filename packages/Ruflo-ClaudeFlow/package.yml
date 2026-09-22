@@ -1,0 +1,78 @@
+name: Ruflo-ClaudeFlow
+category: others
+type: 源码安装
+description: Claude workflow management and automation tool for multi-step AI tasks
+license: MIT
+homepage: https://github.com/ruvnet/claude-flow
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装 Node.js 和 npm
+    sudo dnf install -y nodejs npm
+
+    # 如需特定 LTS 版本，使用 nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+
+    # 配置 npm 国内镜像
+    npm config set registry https://registry.npmmirror.com
+
+    # 检查版本
+    node --version
+    # 需要 >= 18
+    npm --version
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 npm 全局安装（推荐）
+    npm install -g ruflo
+
+    # 方式二：通过 npx 直接使用（备选）
+    npx ruflo
+    ```
+
+  - 基础配置
+    ```
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+
+    # 配置文件位于 ~/.config/ruflo/config.json 或项目根目录的 ruflo.config.json
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-20250514",
+      "maxTokens": 8192,
+      "temperature": 0.3,
+      "workflows_dir": "./workflows",
+      "default_workflow": "default"
+    }
+    ```
+
+  - 快速使用
+    ```
+    ruflo init my-workflow
+    ruflo run my-workflow
+
+    ruflo init <name>                 # 初始化工作流
+    ruflo run <workflow>              # 运行工作流
+    ruflo list                        # 列出工作流
+    ruflo validate <workflow>         # 验证工作流配置
+    ```
+
+  - 验证安装
+    ```
+    ruflo --version
+
+    ruflo init test-flow
+    ruflo run test-flow
+    ```
+
+  - 卸载说明
+    ```
+    npm uninstall -g ruflo
+    rm -rf ~/.config/ruflo
+    ```
