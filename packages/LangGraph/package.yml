@@ -1,0 +1,113 @@
+name: LangGraph
+category: others
+type: 源码安装
+description: Stateful agent orchestration framework built on graphs
+license: MIT
+homepage: https://github.com/langchain-ai/langgraph
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install langgraph langchain-openai
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ langgraph langchain-openai
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv langgraph-env
+    source langgraph-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ langgraph langchain-openai
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/langchain-ai/langgraph.git
+    cd langgraph
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # OpenAI
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 或使用 Anthropic
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 创建 agent_config.yaml 配置文件示例
+    # graph:
+    #   max_steps: 25
+    #   timeout: 600
+    # llm:
+    #   provider: openai
+    #   model: gpt-4o
+    #   temperature: 0.7
+    # state:
+    #   persistence: true
+    #   storage_type: sqlite
+    ```
+
+  - 快速使用
+    ```
+    from langgraph.graph import StateGraph, MessagesState
+    from langchain_openai import ChatOpenAI
+
+    graph = StateGraph(MessagesState)
+
+    def chatbot(state):
+        llm = ChatOpenAI(model="gpt-4o")
+        response = llm.invoke(state["messages"])
+        return {"messages": [response]}
+
+    graph.add_node("chatbot", chatbot)
+    graph.set_entry_point("chatbot")
+    graph.set_finish_point("chatbot")
+
+    app = graph.compile()
+    result = app.invoke({"messages": [("human", "你好！")]})
+    print(result["messages"][-1].content)
+    ```
+
+  - 验证安装
+    ```
+    python -c "import langgraph; print(langgraph.__version__)"
+    # 应输出版本号信息
+
+    python -c "
+    from langgraph.graph import StateGraph, MessagesState
+    from langchain_openai import ChatOpenAI
+
+    graph = StateGraph(MessagesState)
+
+    def chatbot(state):
+        llm = ChatOpenAI(model='gpt-4o-mini')
+        return {'messages': [llm.invoke(state['messages'])]}
+
+    graph.add_node('chatbot', chatbot)
+    graph.set_entry_point('chatbot')
+    graph.set_finish_point('chatbot')
+    app = graph.compile()
+
+    result = app.invoke({'messages': [('human', 'Say hello')]})
+    print('LangGraph is working!')
+    "
+    ```
+
+  - 卸载
+    ```
+    pip uninstall langgraph -y
+    ```

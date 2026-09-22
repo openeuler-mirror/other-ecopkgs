@@ -1,0 +1,75 @@
+name: ECC
+category: others
+type: 源码安装
+description: Everything Claude Code toolkit to extend Claude Code features
+license: MIT
+homepage: https://github.com/affaan-m/everything-claude-code
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Node.js 版本（需要 >= 18）
+    node --version
+    npm --version   # 需要 >= 8
+
+    # openEuler 安装 Node.js、npm 与 git
+    sudo dnf install -y nodejs npm git
+
+    # 或使用 nvm 安装最新 LTS
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # git clone + npm install（推荐）
+    git clone https://github.com/affaan-m/everything-claude-code.git
+    cd everything-claude-code
+
+    # 安装依赖
+    npm install
+
+    # 创建配置文件
+    cp .env.example .env
+    ```
+
+  - 基础配置
+    ```
+    # .env 文件内容示例
+    # ANTHROPIC_API_KEY=sk-ant-your-api-key   # Claude API Key
+    # CLAUDE_MODEL=claude-sonnet-4-20250514   # 模型
+    # MAX_TOKENS=4096                         # 最大 token 数
+
+    # 创建 config.json 配置文件示例
+    # {
+    #   "claude": { "model": "claude-sonnet-4-20250514", "max_tokens": 4096, "temperature": 0.7 },
+    #   "tools": { "enabled": ["git", "terminal", "filesystem"], "custom_commands": [] }
+    # }
+    ```
+
+  - 快速使用
+    ```
+    node src/index.js                    # 启动主程序
+    node src/index.js --help              # 查看帮助
+    node src/index.js --config config.json # 使用自定义配置
+    ```
+
+  - 验证安装
+    ```
+    node src/index.js --version
+    # 应输出版本号信息
+
+    node src/index.js
+    # 在交互界面输入 /help 测试基本功能
+    ```
+
+  - 卸载
+    ```
+    # 删除项目目录
+    rm -rf everything-claude-code
+    ```

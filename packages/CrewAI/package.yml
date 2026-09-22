@@ -1,0 +1,124 @@
+name: CrewAI
+category: others
+type: 源码安装
+description: Role-based multi-agent collaboration framework
+license: MIT
+homepage: https://github.com/crewAIInc/crewAI
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.10）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install crewai
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ crewai
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv crewai-env
+    source crewai-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ crewai
+
+    # 如需额外工具包
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ crewai[tools]
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/crewAIInc/crewAI.git
+    cd crewAI
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # OpenAI
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 或使用其他模型
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+    export GROQ_API_KEY="gsk-your-api-key"
+
+    # 创建 crew_config.yaml 配置文件示例
+    # crew:
+    #   name: Research Crew
+    #   process: sequential  # sequential 或 hierarchical
+    # agents:
+    #   - role: 研究员
+    #     goal: 收集和分析信息
+    #     backstory: 经验丰富的研究专家
+    #     allow_delegation: false
+    #   - role: 写手
+    #     goal: 撰写报告
+    #     backstory: 专业的科技写手
+    #     allow_delegation: false
+    ```
+
+  - 快速使用
+    ```
+    from crewai import Agent, Task, Crew, Process
+
+    researcher = Agent(
+        role="研究员",
+        goal="搜索最新的 AI 技术趋势",
+        backstory="你是一名 AI 技术研究员",
+        verbose=True
+    )
+
+    writer = Agent(
+        role="写手",
+        goal="撰写技术报告",
+        backstory="你是一名技术报告写手",
+        verbose=True
+    )
+
+    research_task = Task(
+        description="搜索 2026 年 AI 最新趋势",
+        agent=researcher,
+        expected_output="AI 趋势列表"
+    )
+
+    write_task = Task(
+        description="基于研究成果撰写报告",
+        agent=writer,
+        expected_output="技术报告文档"
+    )
+
+    crew = Crew(
+        agents=[researcher, writer],
+        tasks=[research_task, write_task],
+        process=Process.sequential
+    )
+
+    result = crew.kickoff()
+    print(result)
+    ```
+
+  - 验证安装
+    ```
+    python -c "import crewai; print(crewai.__version__)"
+    # 应输出版本号信息
+
+    python -c "
+    from crewai import Agent, Task, Crew, Process
+    print('CrewAI is working!')
+    "
+    ```
+
+  - 卸载
+    ```
+    pip uninstall crewai crewai-tools -y
+    ```

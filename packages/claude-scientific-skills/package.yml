@@ -1,0 +1,99 @@
+name: claude-scientific-skills
+category: others
+type: 源码安装
+description: Scientific skills library for math, data analysis, physics and chemistry
+license: MIT
+homepage: https://github.com/K-Dense-AI/claude-scientific-skills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.8
+
+    # 安装 Python、gcc 等基础依赖（openEuler）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 安装 uv（推荐，用于创建隔离虚拟环境）
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+
+  - 获取源码并安装
+    ```
+    # 方式一：git clone + uv 安装（推荐）
+    git clone https://github.com/K-Dense-AI/claude-scientific-skills.git
+    cd claude-scientific-skills
+
+    # 创建并激活虚拟环境
+    uv venv .venv && source .venv/bin/activate
+
+    # 安装项目
+    uv pip install -e .
+
+    # 方式二：git clone + pip 安装（备选）
+    git clone https://github.com/K-Dense-AI/claude-scientific-skills.git
+    cd claude-scientific-skills
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # 环境变量
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+    # 或
+    export OPENAI_API_KEY="sk-xxx"
+
+    # 配置文件示例 scientific.config.json
+    {
+      "skills": {
+        "mathematics": {
+          "enabled": true,
+          "libraries": ["numpy", "scipy", "sympy"]
+        },
+        "visualization": {
+          "enabled": true,
+          "libraries": ["matplotlib", "seaborn"],
+          "style": "science"
+        }
+      },
+      "api": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-20250514"
+      }
+    }
+    ```
+
+  - 快速使用
+    ```
+    # 加载科学技能模板
+    cat skills/data-analysis-pipeline.md
+
+    python scripts/run_analysis.py data.csv    # 运行数据分析
+    python scripts/generate_plot.py            # 生成科学图表
+    ls skills/                                 # 列出技能
+    ```
+
+  - 验证安装
+    ```
+    python -c "import scientific_skills; print('Scientific skills loaded')"
+
+    python -c "
+    import numpy as np
+    from scientific_skills import Calculator
+    calc = Calculator()
+    result = calc.solve_equation('x**2 - 4 = 0')
+    print(f'Solved: {result}')
+    "
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall scientific-skills
+    cd ..
+    rm -rf claude-scientific-skills
+    ```

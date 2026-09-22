@@ -1,0 +1,100 @@
+name: VercelAISDK
+category: others
+type: 源码安装
+description: TypeScript AI SDK for integrating AI into JS/TS applications
+license: NOASSERTION
+homepage: https://github.com/vercel/ai
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Node.js 版本（需要 >= 18）
+    node --version
+    npm --version   # 需要 >= 8
+
+    # openEuler 安装 Node.js 与 npm
+    sudo dnf install -y nodejs npm
+
+    # 或使用 nvm 安装最新 LTS
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # 方式一：npm 安装（推荐）
+    npm install ai
+    npm install @ai-sdk/openai       # OpenAI
+    npm install @ai-sdk/anthropic    # Anthropic
+
+    # 方式二：备选使用 pnpm
+    pnpm add ai @ai-sdk/openai @ai-sdk/anthropic
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 或创建 .env.local 环境变量文件
+    # OPENAI_API_KEY=sk-your-api-key
+    # ANTHROPIC_API_KEY=sk-ant-your-api-key
+    ```
+
+  - 快速使用
+    ```
+    # 基本用法
+    import { generateText } from "ai";
+    import { openai } from "@ai-sdk/openai";
+
+    const { text } = await generateText({
+      model: openai("gpt-4o"),
+      prompt: "你好！请介绍一下你自己。",
+    });
+
+    console.log(text);
+
+    # 流式响应
+    import { streamText } from "ai";
+    import { openai } from "@ai-sdk/openai";
+
+    const result = streamText({
+      model: openai("gpt-4o"),
+      prompt: "写一篇关于 AI Agent 的短文。",
+    });
+
+    for await (const chunk of result.textStream) {
+      process.stdout.write(chunk);
+    }
+
+    # 常用命令
+    npm install ai @ai-sdk/openai     # 安装核心包与 OpenAI 集成
+    node -e "require('ai')"           # 验证安装
+    ```
+
+  - 验证安装
+    ```
+    node -e "require('ai'); console.log('Vercel AI SDK installed');"
+
+    node -e "
+    const { generateText } = require('ai');
+    const { openai } = require('@ai-sdk/openai');
+    async function test() {
+      const { text } = await generateText({ model: openai('gpt-4o-mini'), prompt: 'Say hello' });
+      console.log('Vercel AI SDK is working!');
+      console.log('Response:', text);
+    }
+    test();
+    "
+    ```
+
+  - 卸载
+    ```
+    npm uninstall ai @ai-sdk/openai @ai-sdk/anthropic
+    ```

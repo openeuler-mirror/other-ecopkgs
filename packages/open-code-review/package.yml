@@ -1,0 +1,78 @@
+name: open-code-review
+category: others
+type: 源码安装
+description: Alibaba open-source AI code review agent
+license: Apache-2.0
+homepage: https://github.com/alibaba/open-code-review
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Python >= 3.9，推荐 >= 3.10）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    ```
+
+  - 安装
+    ```
+    # 方式一：uv 虚拟环境安装（推荐）
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install open-code-review
+
+    # 方式二：pip + 国内镜像安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ open-code-review
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 配置 AI 模型 API Key（建议使用通义千问或 OpenAI）
+    export DASHSCOPE_API_KEY="your-dashscope-key"
+    # 或
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 配置文件示例 ~/.open-code-review/config.yaml
+    # ai:
+    #   provider: "dashscope"  # dashscope, openai
+    #   model: "qwen-max"
+    #   api_key: "${DASHSCOPE_API_KEY}"
+    # review:
+    #   languages: ["python", "java"]
+    #   rules: ["security", "performance"]
+    # output:
+    #   format: "markdown"
+    #   file: "./review-report.md"
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 审查本地代码
+    open-code-review review --path ./my-project
+
+    # 审查 Git 变更
+    open-code-review review --git-diff
+
+    # 审查单个文件
+    open-code-review review --file test.py
+    ```
+
+  - 验证安装
+    ```
+    open-code-review --version
+    # 应输出版本号信息
+
+    echo 'print("hello world")' > test.py
+    open-code-review review --file test.py
+    # 预期：输出代码审查报告
+    rm test.py
+    ```
+
+  - 卸载
+    ```
+    pip uninstall open-code-review -y
+    # 删除配置目录
+    rm -rf ~/.open-code-review
+    ```

@@ -1,0 +1,68 @@
+name: claude-code-plugins
+category: others
+type: 源码安装
+description: Anthropic community plugin collection for Claude Code
+license: Apache-2.0
+homepage: https://github.com/anthropics/claude-plugins-community
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # Node.js >= 18（仅运行插件代码时需要，仅获取文件可跳过）
+    sudo dnf install -y nodejs npm
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 插件集合无需编译安装，clone 即可获取
+    git clone https://github.com/anthropics/claude-plugins-community.git
+    cd claude-plugins-community
+    # 如需运行插件，安装依赖
+    npm install
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 配置 API Key
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 插件配置示例 plugins/code-review/config.json
+    # {
+    #   "name": "code-review",
+    #   "version": "1.0.0",
+    #   "config": {
+    #     "apiKey": "${ANTHROPIC_API_KEY}",
+    #     "model": "claude-sonnet-4-20250514"
+    #   }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 列出所有可用插件
+    npm run list-plugins
+
+    # 运行特定插件
+    npm run plugin:code-review -- --path ./my-project/src
+
+    # 运行测试
+    npm run test
+    ```
+
+  - 验证获取
+    ```
+    ls -la
+    # 应看到 plugins/ 目录和 package.json
+    npm run list-plugins
+    # 预期：显示所有可用插件列表
+    ```
+
+  - 卸载
+    ```
+    rm -rf claude-plugins-community
+    ```

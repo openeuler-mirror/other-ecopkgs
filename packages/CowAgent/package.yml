@@ -1,0 +1,97 @@
+name: CowAgent
+category: others
+type: 源码安装
+description: Task-oriented agent framework with planning and tool calling
+license: MIT
+homepage: https://github.com/cowagent/cowagent
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.10）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install cowagent
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ cowagent
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv cowagent-env
+    source cowagent-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ cowagent
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/cowagent/cowagent.git
+    cd cowagent
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # 或写入 .env 文件
+    echo "OPENAI_API_KEY=sk-your-api-key" > .env
+
+    # 创建 cowagent.yaml 配置文件示例
+    # agent:
+    #   name: my-cowagent
+    #   llm:
+    #     provider: openai
+    #     model: gpt-4o
+    #     temperature: 0.7
+    # tasks:
+    #   max_retries: 3
+    #   timeout: 300
+    # tools:
+    #   enabled:
+    #     - web_search
+    #     - code_executor
+    #     - file_operations
+    ```
+
+  - 快速使用
+    ```
+    # 命令行模式
+    cowagent run "你的任务描述"
+    cowagent chat                  # 交互模式
+
+    # Python API 示例
+    from cowagent import Agent
+    agent = Agent(config="cowagent.yaml")
+    result = agent.run("搜索最新的 AI 新闻")
+    print(result)
+    ```
+
+  - 验证安装
+    ```
+    python -c "import cowagent; print(cowagent.__version__)"
+    # 应输出版本号信息
+
+    cowagent run "Hello, world!"
+    # 或运行内置测试
+    python -m pytest tests/
+    ```
+
+  - 卸载
+    ```
+    pip uninstall cowagent -y
+
+    # 删除项目目录
+    rm -rf cowagent
+    ```

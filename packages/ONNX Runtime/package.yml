@@ -1,0 +1,74 @@
+name: ONNX Runtime
+category: others
+type: 源码安装
+description: Microsoft open-source high-performance ML inference engine for ONNX models
+license: MIT
+homepage: https://github.com/microsoft/onnxruntime
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Python >= 3.8，推荐 >= 3.10）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    ```
+
+  - 安装
+    ```
+    # 方式一：uv 虚拟环境安装（推荐）
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+
+    # CPU 版本
+    uv pip install onnxruntime
+    # GPU 版本（支持 CUDA）
+    uv pip install onnxruntime-gpu
+
+    # 方式二：pip + 国内镜像安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ onnxruntime
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # CPU 线程数配置
+    export OMP_NUM_THREADS=4
+    export MKL_NUM_THREADS=4
+
+    # 创建推理会话（Python 示例）
+    # import onnxruntime
+    # options = onnxruntime.SessionOptions()
+    # options.intra_op_num_threads = 4
+    # options.graph_optimization_level = onnxruntime.GraphOptimizationLevel.ORT_ENABLE_ALL
+    # session = onnxruntime.InferenceSession(
+    #     "model.onnx", sess_options=options, providers=['CPUExecutionProvider']
+    # )
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 推理示例（Python）
+    # import onnxruntime, numpy as np
+    # session = onnxruntime.InferenceSession("model.onnx")
+    # input_name = session.get_inputs()[0].name
+    # output_name = session.get_outputs()[0].name
+    # input_data = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    # results = session.run([output_name], {input_name: input_data})
+    # print(f"推理结果形状: {results[0].shape}")
+    ```
+
+  - 验证安装
+    ```
+    python -c "import onnxruntime; print(onnxruntime.__version__)"
+    # 应输出版本号
+
+    python -c "import onnxruntime; print(onnxruntime.get_device())"
+    # CPU 版本输出: CPU
+    ```
+
+  - 卸载
+    ```
+    pip uninstall onnxruntime onnxruntime-gpu -y
+    ```

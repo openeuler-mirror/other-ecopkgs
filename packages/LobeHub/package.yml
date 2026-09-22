@@ -1,0 +1,75 @@
+name: LobeHub
+category: others
+type: 源码安装
+description: Modern multi-agent collaboration platform with unified multi-model support
+license: NOASSERTION
+homepage: https://github.com/lobehub/lobehub
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装 Docker CE（需先配置 Docker CE 源）
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+
+    # 检查环境
+    docker --version
+    # 需要 >= 24
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 Docker 安装（推荐）
+    docker run -d \
+      --name lobehub \
+      -p 3210:3210 \
+      -v lobehub-data:/app/data \
+      -e OPENAI_API_KEY=sk-xxx \
+      lobehub/lobe-chat:latest
+    # 访问 http://localhost:3210 即可使用
+
+    # 方式二：通过 npm 安装（备选）
+    npm config set registry https://registry.npmmirror.com
+    npm install -g @lobehub/lobe-cli
+    lobe-cli start
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+    export GOOGLE_API_KEY="your-google-api-key"
+    export APP_PORT=3210
+    export ACCESS_CODE="your-access-code"  # 可选，访问密码
+    ```
+
+  - 快速使用
+    ```
+    # 启动后通过浏览器访问 http://localhost:3210
+
+    docker start lobehub              # 启动
+    docker stop lobehub               # 停止
+    docker logs -f lobehub            # 查看日志
+    docker restart lobehub            # 重启
+    ```
+
+  - 验证安装
+    ```
+    docker ps | grep lobehub
+    # 或
+    lobe-cli --version
+
+    curl http://localhost:3210/api/health
+    # 预期输出：健康状态响应
+    ```
+
+  - 卸载说明
+    ```
+    docker stop lobehub
+    docker rm lobehub
+    docker volume rm lobehub-data
+    ```

@@ -1,0 +1,79 @@
+name: AutoGPT
+category: others
+type: 源码安装
+description: Autonomous AI agent that decomposes and executes complex tasks
+license: NOASSERTION
+homepage: https://github.com/Significant-Gravitas/AutoGPT
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.10）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install -r AutoGPT/requirements.txt
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+    ```
+
+  - 安装
+    ```
+    # 方式一：一键脚本安装（推荐）
+    git clone https://github.com/Significant-Gravitas/AutoGPT.git
+    cd AutoGPT
+    ./run.sh
+
+    # 方式二：Docker 安装（备选）
+    git clone https://github.com/Significant-Gravitas/AutoGPT.git
+    cd AutoGPT
+    docker-compose up
+    ```
+
+  - 基础配置
+    ```
+    # 复制环境变量模板文件并编辑
+    cp .env.template .env
+
+    # .env 文件内容示例
+    # OPENAI_API_KEY=your-openai-api-key     # OpenAI API Key（必需）
+    # FAST_LLM_MODEL=gpt-3.5-turbo           # 快速模型
+    # SMART_LLM_MODEL=gpt-4o                 # 智能模型
+    # MEMORY_BACKEND=local                   # 记忆后端（可选）
+    ```
+
+  - 快速使用
+    ```
+    python -m autogpt                    # 正常启动
+    python -m autogpt --continuous       # 连续模式（不需确认）
+    python -m autogpt --gpt3only         # 仅使用 GPT-3.5
+    python -m autogpt --gpt4only         # 仅使用 GPT-4
+    ```
+
+  - 验证安装
+    ```
+    python -m autogpt --version
+    # 应输出版本号信息
+
+    python -m autogpt
+    # 输入一个简单目标（如“搜索今天的新闻头条”），观察是否自主分解并逐步执行
+    ```
+
+  - 卸载
+    ```
+    # 删除项目目录
+    rm -rf AutoGPT
+
+    # 删除配置文件
+    rm -rf ~/.auto-gpt
+    ```

@@ -1,0 +1,4 @@
+24.03-LTS-Next:
+    "langchain-core==1.6.4":
+        - x86_64
+        - aarch64

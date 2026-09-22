@@ -1,0 +1,74 @@
+name: archify
+category: others
+type: 源码安装
+description: Tool to analyze project architecture and dependencies and generate visual architecture reports
+license: MIT
+homepage: https://github.com/tt-a1i/archify
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y nodejs npm git
+    # 或安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # npm 全局安装（推荐）
+    npm install -g archify
+    ```
+
+  - 验证安装
+    ```
+    archify --version
+    # 应输出版本号
+    ```
+
+  - 基础配置
+    ```
+    # 配置文件位于项目根目录 archify.config.json
+    {
+      "project": {
+        "name": "my-project",
+        "language": "typescript",
+        "entryPoints": ["./src/index.ts"]
+      },
+      "analysis": {
+        "depth": "full",
+        "excludePatterns": ["node_modules", "dist", "build"],
+        "outputFormat": "markdown"
+      },
+      "reporting": {
+        "generateVisualization": true,
+        "outputDir": "./archify-report"
+      }
+    }
+    ```
+
+  - 快速使用
+    ```
+    cd /path/to/your/project
+    archify                   # 分析当前项目
+    archify /path/to/project  # 分析指定项目
+    archify --output json     # JSON 格式输出
+    archify --help            # 查看帮助
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g archify
+    rm -rf ~/.config/archify
+    ```

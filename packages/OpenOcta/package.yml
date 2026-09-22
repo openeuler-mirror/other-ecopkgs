@@ -1,0 +1,94 @@
+name: OpenOcta
+category: others
+type: 源码安装
+description: Open-source multi-channel AI assistant aggregation platform
+license: GPL-3.0
+homepage: https://github.com/openocta/openocta
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 下载和解压工具（默认已装），如需源码编译则安装编译工具链
+    sudo dnf install -y wget tar gcc gcc-c++ make cmake git go
+
+    # 检查系统架构
+    uname -m
+    # x86_64 或 aarch64
+    ```
+
+  - 安装
+    ```
+    # 方式一：下载预编译二进制（推荐）
+    # Linux (AMD64)
+    wget https://github.com/openocta/openocta/releases/latest/download/openocta-linux-amd64.tar.gz
+
+    # Linux (ARM64)
+    wget https://github.com/openocta/openocta/releases/latest/download/openocta-linux-arm64.tar.gz
+
+    # 解压并安装
+    tar -xzf openocta-linux-amd64.tar.gz
+    chmod +x openocta
+    sudo mv openocta /usr/local/bin/
+
+    # 方式二：从源码编译（备选）
+    git clone https://github.com/openocta/openocta.git
+    cd openocta
+    make build
+    sudo mv build/openocta /usr/local/bin/
+    ```
+
+  - 基础配置
+    ```
+    # 初始化配置
+    openocta init
+    # 配置文件生成在 ~/.openocta/config.yaml
+
+    # 编辑 ~/.openocta/config.yaml
+    server:
+      host: "0.0.0.0"
+      port: 8080
+
+    models:
+      providers:
+        openai:
+          api_key: "sk-xxx"
+          model: "gpt-4o"
+        anthropic:
+          api_key: "sk-ant-xxx"
+          model: "claude-sonnet-4-20250514"
+
+    auth:
+      mode: "token"
+      tokens:
+        - "your-api-token-here"
+    ```
+
+  - 快速使用
+    ```
+    openocta serve          # 前台运行
+    openocta serve --daemon # 后台运行
+
+    openocta init            # 初始化配置
+    openocta serve           # 启动服务
+    openocta stop            # 停止服务
+    openocta status          # 查看状态
+    ```
+
+  - 验证安装
+    ```
+    openocta --version
+
+    curl http://127.0.0.1:8080/health
+    # 预期输出：{"status":"ok"}
+    ```
+
+  - 卸载说明
+    ```
+    openocta stop
+    sudo rm /usr/local/bin/openocta
+    rm -rf ~/.openocta
+    ```

@@ -1,0 +1,74 @@
+name: humanlayer-skills
+category: others
+type: 源码安装
+description: Open collection of reusable AI agent skills
+license: MIT
+homepage: https://github.com/humanlayer/skills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # Node.js >= 18（仅运行技能代码时需要，仅获取技能文件可跳过）
+    sudo dnf install -y nodejs npm
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 技能集合无需编译安装，clone 即可获取
+    git clone https://github.com/humanlayer/skills.git
+    cd skills
+    # 如需运行某项技能，进入对应目录安装依赖
+    npm install
+    # 或按需安装单个技能
+    cd search-skill && npm install
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 根据技能需求选择性设置
+    export OPENAI_API_KEY="sk-your-api-key"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+    export SERP_API_KEY="your-serp-api-key"
+
+    # 技能配置示例 search-skill/config.json
+    # {
+    #   "skillName": "web-search",
+    #   "version": "1.0.0",
+    #   "config": {
+    #     "provider": "serpapi",
+    #     "apiKey": "${SERP_API_KEY}",
+    #     "maxResults": 5
+    #   }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 列出所有可用技能
+    npm run list-skills
+
+    # 测试特定技能
+    npm run test search-skill
+
+    # 查看技能文档
+    npm run docs search-skill
+    ```
+
+  - 验证获取
+    ```
+    ls -la
+    # 应看到多个技能子目录
+    npm test
+    npm run test search-skill
+    # 预期：测试通过，技能运行正常
+    ```
+
+  - 卸载
+    ```
+    rm -rf skills
+    ```

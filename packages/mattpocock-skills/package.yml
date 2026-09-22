@@ -1,0 +1,60 @@
+name: mattpocock-skills
+category: others
+type: 源码安装
+description: TypeScript skills collection by Matt Pocock for AI agents covering types, patterns and design
+license: MIT
+homepage: https://github.com/mattpocock/skills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 本项目仅为技能文件集合，无需编译安装，只需 Git
+    sudo dnf install -y git
+    git --version
+    # 需要 >= 2.0
+    ```
+
+  - 安装
+    ```
+    # git clone 安装（推荐）
+    git clone https://github.com/mattpocock/skills.git
+    cd skills
+    ```
+
+  - 验证安装
+    ```
+    ls -la
+    # 确认能看到技能文件（.md 或 .json 格式）
+    ls skills/*.md
+    # 预期输出：列出所有 .md 技能文件
+    ```
+
+  - 基础配置
+    ```
+    # 将本项目路径添加到 AI Agent（如 Cline、Claude Code）的配置中
+    export SKILLS_DIR="/path/to/skills"
+
+    # 在 Agent 提示词中引用技能文件
+    # 请参考 skills/typescript-advanced-patterns.md 中的内容，
+    # 使用 TypeScript 高级类型模式实现以下功能...
+    ```
+
+  - 快速使用
+    ```
+    # 将技能文件内容作为提示词上下文提供给 AI Agent
+    cat skills/typescript-advanced-patterns.md
+
+    ls skills/                      # 列出所有技能
+    cat skills/typescript-basics.md # 查看特定技能内容
+    wc -l skills/*.md               # 统计技能文件行数
+    ```
+
+  - 卸载
+    ```
+    cd ..
+    rm -rf skills
+    ```

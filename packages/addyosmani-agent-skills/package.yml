@@ -1,0 +1,65 @@
+name: addyosmani-agent-skills
+category: others
+type: 源码安装
+description: Software engineering skills collection by Addy Osmani for code review, performance and testing
+license: MIT
+homepage: https://github.com/addyosmani/agent-skills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 本项目为技能文件集合，不要求特定运行时环境，只需 Git
+    sudo dnf install -y git
+    git --version
+    # 需要 >= 2.0
+    ```
+
+  - 安装
+    ```
+    # git clone 安装（推荐）
+    git clone https://github.com/addyosmani/agent-skills.git
+    cd agent-skills
+    ```
+
+  - 验证安装
+    ```
+    ls -la
+    # 确认能看到技能文件
+    ls skills/*.md | wc -l
+    cat skills/README.md | head -10
+    # 预期输出：技能文件数量及技能说明
+    ```
+
+  - 基础配置
+    ```
+    # 在 Agent 的 .clinerules 或 .claude_rules 中引用技能
+    echo "请参考以下技能指导：@skills/code-review.md" > .clinerules
+
+    # 引用多个技能
+    引用技能：
+    - skills/code-review.md
+    - skills/performance-optimization.md
+    - skills/testing-strategies.md
+    - skills/architecture-patterns.md
+    ```
+
+  - 快速使用
+    ```
+    # 将技能文件内容作为上下文提供给 AI Agent
+    cat skills/code-review.md
+    echo "@skills/code-review.md" >> .clinerules
+
+    ls skills/                          # 列出所有技能
+    cat skills/performance-optimization.md  # 查看性能优化技能
+    grep -r "best practice" skills/     # 搜索特定内容
+    ```
+
+  - 卸载
+    ```
+    cd ..
+    rm -rf agent-skills
+    ```

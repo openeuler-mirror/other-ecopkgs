@@ -1,0 +1,4 @@
+24.03-LTS-Next:
+    "sdk/sdk/v0.0.84":
+        - x86_64
+        - aarch64

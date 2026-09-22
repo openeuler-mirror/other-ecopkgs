@@ -1,0 +1,70 @@
+name: Cherry-Studio
+category: others
+type: 源码安装
+description: Modern cross-platform AI desktop client with knowledge base support
+license: AGPL-3.0
+homepage: https://github.com/CherryHQ/cherry-studio
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 桌面客户端应用，无需特定运行时，openEuler 支持 AppImage 方式运行
+    ```
+
+  - 安装
+    ```
+    # 方式一：AppImage 安装（推荐）
+    # 从 GitHub Releases 下载 AppImage：
+    # https://github.com/CherryHQ/cherry-studio/releases
+    chmod +x Cherry-Studio-*.AppImage
+    ./Cherry-Studio-*.AppImage
+
+    # 方式二：Docker 部署
+    docker run -d \
+      --name cherry-studio \
+      -p 8080:8080 \
+      -v cherry-studio-data:/app/data \
+      ghcr.io/cherryhq/cherry-studio:latest
+    ```
+
+  - 基础配置
+    ```
+    # 配置文件位于 ~/.config/CherryStudio/
+    # 首次启动配置：
+    # 1. 打开 Cherry Studio 应用
+    # 2. 进入设置 → 模型提供商
+    # 3. 添加 AI 模型 API Key
+    # 4. 选择默认模型
+    ```
+
+  - 快速使用
+    ```
+    # 1. 打开 Cherry Studio
+    # 2. 在输入框中输入问题
+    # 3. 选择模型（如有多个）
+    # 4. 发送消息查看回复
+    ```
+
+  - 验证安装
+    ```
+    # Docker 方式
+    curl http://localhost:8080
+    # 应返回 Web 界面
+    ```
+
+  - 卸载
+    ```
+    # AppImage 方式
+    rm -f Cherry-Studio-*.AppImage
+    rm -rf ~/.config/CherryStudio/
+
+    # Docker 方式
+    docker stop cherry-studio
+    docker rm cherry-studio
+    docker rmi ghcr.io/cherryhq/cherry-studio:latest
+    docker volume rm cherry-studio-data
+    ```

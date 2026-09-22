@@ -1,0 +1,71 @@
+name: ToolJet
+category: others
+type: 源码安装
+description: Open-source low-code platform for building internal tools and AI agents
+license: AGPL-3.0
+homepage: https://github.com/ToolJet/ToolJet
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 安装 Docker CE（Docker >= 20.10，推荐 >= 24.0）
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+
+    # 验证环境
+    docker --version
+    docker compose version
+    ```
+
+  - 安装
+    ```
+    # Docker 部署（推荐）
+    git clone https://github.com/ToolJet/ToolJet.git
+    cd ToolJet
+
+    # 使用 Docker Compose 启动
+    docker compose up -d
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 创建 .env 文件
+    TOOLJET_HOST=http://localhost:3000
+    SECRET_KEY_BASE=generate-a-random-secret-key
+    LOCKBOX_MASTER_KEY=generate-a-random-lockbox-key
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 浏览器打开 http://localhost:3000，注册管理员账号登录后开始构建
+
+    # 查看日志
+    docker compose logs -f tooljet
+
+    # 重启服务
+    docker compose restart
+
+    # 更新到最新版本
+    docker compose pull && docker compose up -d
+    ```
+
+  - 验证安装
+    ```
+    docker compose ps
+    # 预期：tooljet 容器状态为 Up
+
+    # 验证服务健康状态
+    curl http://localhost:3000/api/health
+    # 预期：返回 {"status":"ok"}
+    ```
+
+  - 卸载
+    ```
+    docker compose down -v
+    docker rmi tooljet/tooljet:latest
+    rm -rf ToolJet
+    ```

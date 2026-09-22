@@ -1,0 +1,64 @@
+name: i-have-adhd
+category: others
+type: 源码安装
+description: AI agent rules collection to improve focus, task management and output consistency
+license: MIT
+homepage: https://github.com/ayghri/i-have-adhd
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 本项目仅为文本规则文件集合，无需运行环境，只需 Git
+    sudo dnf install -y git
+    git --version
+    # 需要 >= 2.0
+    ```
+
+  - 安装
+    ```
+    # git clone 安装（推荐）
+    git clone https://github.com/ayghri/i-have-adhd.git
+    cd i-have-adhd
+    ```
+
+  - 验证安装
+    ```
+    ls -la
+    # 确认能看到规则文件
+    cat rules/focus-rules.md | head -5
+    # 预期输出：规则文件的前 5 行内容
+    ```
+
+  - 基础配置
+    ```
+    # 在 Claude Code 的 .claude_rules 文件中引用规则
+    @rules/adhd-focus-rules.md
+    @rules/task-management-rules.md
+
+    # 或在 .clinerules / 项目级配置中添加规则行
+    - 每次只关注一个任务，不要同时处理多个事项
+    - 在开始新任务前，确认当前任务已完成
+    - 提供清晰的步骤分解
+    - 保持输出简洁直接
+    ```
+
+  - 快速使用
+    ```
+    cat rules/focus-rules.md
+    # 复制输出内容到 Agent 规则配置
+
+    cat rules/*.md            # 查看所有规则
+    cat rules/focus-rules.md  # 查看专注规则
+    ls rules/                 # 列出规则文件
+    ```
+
+  - 卸载
+    ```
+    cd ..
+    rm -rf i-have-adhd
+    # 并移除在 Agent 配置中添加的规则内容
+    ```

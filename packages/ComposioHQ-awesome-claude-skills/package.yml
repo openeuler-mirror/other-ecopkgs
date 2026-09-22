@@ -1,0 +1,66 @@
+name: ComposioHQ-awesome-claude-skills
+category: others
+type: 源码安装
+description: Curated collection of plug-and-play Claude AI skills
+license: unknown
+homepage: https://github.com/ComposioHQ/awesome-claude-skills
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 安装 Git
+    sudo dnf install -y git
+    git --version
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 技能合集无需编译安装，clone 即可获取
+    git clone https://github.com/ComposioHQ/awesome-claude-skills.git
+    cd awesome-claude-skills
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 如需 API Key
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 每个技能目录包含独立配置文件，如 skills/file-operations/skill.json
+    # {
+    #   "name": "file-operations",
+    #   "version": "1.0.0",
+    #   "capabilities": [
+    #     "read_file", "write_file", "list_directory", "delete_file"
+    #   ],
+    #   "config": {
+    #     "allowedPaths": ["/home/user/projects"],
+    #     "maxFileSize": "10MB"
+    #   }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 查看所有可用技能
+    ls skills/
+
+    # 查看特定技能使用说明
+    cat skills/file-operations/README.md
+    ```
+
+  - 验证获取
+    ```
+    ls -la
+    # 应看到 skills/ 目录和 README.md
+    ls skills/*/skill.json
+    # 预期：列出所有技能的配置文件
+    ```
+
+  - 卸载
+    ```
+    rm -rf awesome-claude-skills
+    ```

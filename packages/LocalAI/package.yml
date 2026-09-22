@@ -1,0 +1,94 @@
+name: LocalAI
+category: others
+type: 源码安装
+description: Self-hosted OpenAI-compatible API to run LLMs and generative models locally
+license: MIT
+homepage: https://github.com/mudler/LocalAI
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    docker --version
+    docker compose version
+    # Docker >= 20.10
+
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+    docker --version
+    ```
+
+  - 安装
+    ```
+    # 方式一：Docker 部署（推荐）
+    # CPU 模式
+    docker run -d \
+      --name localai \
+      -p 8080:8080 \
+      -v $PWD/models:/build/models \
+      localai/localai:latest
+
+    # GPU 模式（NVIDIA）
+    docker run -d \
+      --name localai \
+      -p 8080:8080 \
+      -v $PWD/models:/build/models \
+      --gpus all \
+      localai/localai:latest
+
+    # 方式二：二进制安装
+    wget https://github.com/mudler/LocalAI/releases/latest/download/local-ai-linux-amd64
+    chmod +x local-ai-linux-amd64
+    sudo mv local-ai-linux-amd64 /usr/local/bin/local-ai
+    local-ai
+    ```
+
+  - 基础配置
+    ```
+    # 环境变量配置
+    export THREADS=4
+    export CONTEXT_SIZE=2048
+    export MODELS_PATH=/path/to/models
+
+    # 创建 models.yaml：
+    - name: llama-3.1-8b
+      backend: llama-cpp
+      parameters:
+        model: https://huggingface.co/QuantFactory/Meta-Llama-3.1-8B-GGUF/resolve/main/Meta-Llama-3.1-8B.Q4_K_M.gguf
+        context_size: 8192
+        threads: 4
+    ```
+
+  - 快速使用
+    ```
+    # 聊天补全（与 OpenAI API 完全兼容）
+    curl http://localhost:8080/v1/chat/completions \
+      -H "Content-Type: application/json" \
+      -d '{"model": "llama-3.1-8b", "messages": [{"role": "user", "content": "Hello!"}]}'
+
+    # 常用命令
+    docker compose up -d      # 启动
+    docker compose down       # 停止
+    docker compose logs -f    # 查看日志
+    ```
+
+  - 验证安装
+    ```
+    curl http://localhost:8080/healthz
+    # 预期返回：OK
+    ```
+
+  - 卸载
+    ```
+    # Docker 方式
+    docker compose down -v
+    docker rm -f localai
+    docker rmi localai/localai:latest
+
+    # 二进制方式
+    sudo rm /usr/local/bin/local-ai
+    rm -rf ~/.localai
+    ```

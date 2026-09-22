@@ -1,0 +1,71 @@
+name: ponytail
+category: others
+type: 源码安装
+description: Lightweight terminal AI assistant with multiple model backends, streaming and session management
+license: MIT
+homepage: https://github.com/DietrichGebert/ponytail
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y nodejs npm git
+    # 或安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # npm 全局安装（推荐）
+    npm install -g ponytail
+    ```
+
+  - 验证安装
+    ```
+    ponytail --version
+    # 应输出版本号
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-xxx"
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+
+    # 配置文件 ~/.config/ponytail/config.json
+    {
+      "provider": "openai",
+      "model": "gpt-4o",
+      "temperature": 0.7,
+      "maxTokens": 2048,
+      "stream": true
+    }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    ponytail                  # 启动交互模式
+    ponytail "什么是闭包？"   # 单次问答
+
+    ponytail                       # 启动交互模式
+    ponytail "问题"                # 单次问答
+    ponytail --model gpt-4o-mini   # 指定模型
+    ponytail --help                # 查看帮助
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g ponytail
+    rm -rf ~/.config/ponytail
+    ```

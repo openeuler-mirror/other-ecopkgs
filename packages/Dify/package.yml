@@ -1,0 +1,75 @@
+name: Dify
+category: others
+type: 源码安装
+description: Open-source LLM app development and deployment platform
+license: NOASSERTION
+homepage: https://github.com/langgenius/dify
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Docker 环境（Docker >= 20.10 / Docker Compose >= 2.0）
+    docker --version
+    docker compose version
+
+    # openEuler 配置 Docker CE 源并安装
+    sudo dnf install -y dnf-plugins-core
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+    ```
+
+  - 安装
+    ```
+    # Docker Compose 部署（推荐）
+    git clone https://github.com/langgenius/dify.git
+    cd dify/docker
+    cp .env.example .env
+    docker compose up -d
+    ```
+
+  - 基础配置
+    ```
+    # 编辑 docker/.env 文件
+    # SECRET_KEY=your-secret-key
+    # INIT_PASSWORD=your-admin-password
+    # OPENAI_API_KEY=sk-your-api-key
+    # DB_USERNAME=postgres
+    # DB_PASSWORD=difyai
+    # DB_HOST=db
+    # DB_PORT=5432
+
+    # 管理员初始化：访问 http://localhost:3000，使用初始化密码登录，
+    # 然后设置管理员账号、配置模型供应商、创建应用。
+    ```
+
+  - 快速使用
+    ```
+    # 创建第一个应用：登录控制台 → 创建应用 → 聊天助手 → 选择模型 → 发布
+
+    # 常用命令
+    docker compose up -d         # 启动所有服务
+    docker compose down          # 停止所有服务
+    docker compose logs -f       # 查看日志
+    docker compose pull          # 更新镜像
+    ```
+
+  - 验证安装
+    ```
+    docker compose ps
+    # 浏览器打开 http://localhost:3000（预期 api、web、worker、db、redis 均为 running）
+
+    curl http://localhost:3000/health
+    ```
+
+  - 卸载
+    ```
+    cd dify/docker
+    docker compose down -v
+    cd ..
+    rm -rf dify
+    ```

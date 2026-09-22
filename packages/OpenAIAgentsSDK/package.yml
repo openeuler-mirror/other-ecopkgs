@@ -1,0 +1,101 @@
+name: OpenAIAgentsSDK
+category: others
+type: 源码安装
+description: Official OpenAI SDK for building and orchestrating AI agents
+license: MIT
+homepage: https://github.com/openai/openai-agents-python
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install openai-agents
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ openai-agents
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    source .venv/bin/activate
+    pip install openai-agents
+
+    # 国内镜像加速
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ openai-agents
+
+    # 方式二：备选 uv 安装
+    uv pip install openai-agents
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    export OPENAI_ORG_ID="org-your-org-id"
+
+    # 创建 config.py 配置文件示例
+    from agents import Agent, Runner, set_default_openai_key
+    import os
+
+    api_key = os.getenv("OPENAI_API_KEY")
+
+    agent_config = {
+        "model": "gpt-4o",
+        "temperature": 0.7,
+        "max_tokens": 4096
+    }
+    ```
+
+  - 快速使用
+    ```
+    # 基本用法
+    from agents import Agent, Runner
+
+    agent = Agent(
+        name="Assistant",
+        instructions="你是一个有用的 AI 助手。",
+        model="gpt-4o"
+    )
+
+    result = Runner.run_sync(agent, input="你好！请介绍一下你自己。")
+    print(result.final_output)
+
+    # 常用命令
+    pip install openai-agents          # 基础安装
+    pip install openai-agents[cli]     # 安装 CLI 工具
+    python -c "import agents"          # 验证导入
+    ```
+
+  - 验证安装
+    ```
+    python -c "import agents; print(agents.__version__)"
+    # 应输出版本号信息
+
+    python -c "
+    from agents import Agent, Runner
+
+    agent = Agent(name='TestAgent', instructions='回复 hello', model='gpt-4o-mini')
+    result = Runner.run_sync(agent, 'Say hello')
+    print(result.final_output)
+    print('OpenAI Agents SDK is working!')
+    "
+    ```
+
+  - 卸载
+    ```
+    pip uninstall openai-agents -y
+    rm -rf .venv
+    ```

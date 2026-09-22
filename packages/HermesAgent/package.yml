@@ -1,0 +1,90 @@
+name: HermesAgent
+category: others
+type: 源码安装
+description: General-purpose AI Agent framework by Nous Research
+license: MIT
+homepage: https://github.com/NousResearch/hermes-agent
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.10）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install hermes-agent
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ hermes-agent
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv hermes-env
+    source hermes-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ hermes-agent
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/NousResearch/hermes-agent.git
+    cd hermes-agent
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key（支持多种 LLM 后端）
+    export OPENAI_API_KEY="sk-your-api-key"          # OpenAI
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"   # Anthropic
+
+    # 或写入 .env 文件
+    echo "OPENAI_API_KEY=sk-your-api-key" > .env
+
+    # 创建 ~/.hermes/config.yaml 配置文件示例
+    # llm:
+    #   provider: openai
+    #   model: gpt-4o
+    #   temperature: 0.7
+    # tools:
+    #   enabled:
+    #     - code_executor
+    #     - web_search
+    #     - file_operations
+    # memory:
+    #   type: local
+    #   max_tokens: 4096
+    ```
+
+  - 快速使用
+    ```
+    hermes chat              # 启动交互式对话
+    hermes run "<指令>"      # 执行单条指令
+    hermes config show       # 查看当前配置
+    hermes tools list        # 列出可用工具
+    ```
+
+  - 验证安装
+    ```
+    hermes --version
+    # 应输出版本号信息
+
+    hermes chat
+    # 在对话中输入测试消息，Hermes Agent 应返回功能说明
+    ```
+
+  - 卸载
+    ```
+    pip uninstall hermes-agent -y
+
+    # 删除配置文件
+    rm -rf ~/.hermes
+    ```

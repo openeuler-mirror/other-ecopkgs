@@ -1,0 +1,89 @@
+name: LangChain
+category: others
+type: 源码安装
+description: Popular LLM application development framework
+license: MIT
+homepage: https://github.com/langchain-ai/langchain
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本（需要 >= 3.9）
+    python --version
+
+    # 安装 Python 与编译依赖
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+
+    # 推荐使用 uv 创建隔离环境并安装
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install langchain langchain-openai
+
+    # 或使用 pip + 国内 PyPI 镜像源
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ langchain langchain-openai
+    ```
+
+  - 安装
+    ```
+    # 方式一：pip 安装（推荐）
+    python -m venv langchain-env
+    source langchain-env/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ langchain langchain-openai
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/langchain-ai/langchain.git
+    cd langchain
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # OpenAI
+    export OPENAI_API_KEY="sk-your-api-key"
+
+    # Anthropic
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # LangSmith 配置（可选）
+    export LANGCHAIN_TRACING_V2="true"
+    export LANGCHAIN_API_KEY="ls-your-api-key"
+    ```
+
+  - 快速使用
+    ```
+    from langchain_openai import ChatOpenAI
+    from langchain_core.prompts import ChatPromptTemplate
+
+    llm = ChatOpenAI(model="gpt-4o")
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "你是一个有用的 AI 助手。"),
+        ("human", "{input}")
+    ])
+
+    chain = prompt | llm
+    response = chain.invoke({"input": "你好！"})
+    print(response.content)
+    ```
+
+  - 验证安装
+    ```
+    python -c "import langchain; print(langchain.__version__)"
+    # 应输出版本号信息
+
+    python -c "
+    from langchain_openai import ChatOpenAI
+    llm = ChatOpenAI(model='gpt-4o-mini')
+    result = llm.invoke('Say hello')
+    print(result.content)
+    "
+    # 预期：返回问候信息
+    ```
+
+  - 卸载
+    ```
+    pip uninstall langchain langchain-openai langchain-community -y
+    ```

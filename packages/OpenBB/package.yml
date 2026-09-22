@@ -1,0 +1,88 @@
+name: OpenBB
+category: others
+type: 源码安装
+description: Open-source financial AI agent platform for market data analysis
+license: NOASSERTION
+homepage: https://github.com/OpenBB-finance/OpenBB
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    python3 --version
+    # 需要 >= 3.9
+
+    # 推荐使用 uv 创建虚拟环境安装，避免依赖冲突
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 pip 安装（推荐）
+    uv pip install "openbb[all]"
+    # 或使用国内镜像安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ "openbb[all]"
+
+    # 方式二：从源码安装
+    git clone https://github.com/OpenBB-finance/OpenBB.git
+    cd OpenBB
+    pip install -e ".[all]"
+    ```
+
+  - 基础配置
+    ```
+    # 配置 API Key
+    openbb set --key OPENBB_POLYGON_API_KEY "your-polygon-key"
+    openbb set --key OPENBB_ALPHA_VANTAGE_API_KEY "your-alpha-vantage-key"
+    openbb set --key OPENBB_FRED_API_KEY "your-fred-key"
+
+    # 查看已配置的 Key
+    openbb list --keys
+
+    # 配置文件位于 ~/.openbb/openbb_config.json
+    ```
+
+  - 快速使用
+    ```
+    # 启动交互式终端
+    openbb
+
+    # Python 脚本示例
+    from openbb import obb
+
+    df = obb.equity.price.historical("AAPL", start_date="2024-01-01")
+    print(df)
+
+    result = obb.agent("分析苹果公司最近一个季度的营收趋势")
+    print(result)
+
+    # 常用命令（交互式终端中）
+    # /stock AAPL   查看股票信息
+    # /crypto BTC   查看加密货币
+    # /news AAPL    查看新闻
+    # /help         显示帮助
+    ```
+
+  - 验证安装
+    ```
+    openbb --version
+    python -c "import openbb; print(openbb.__version__)"
+
+    python -c "
+    from openbb import obb
+    df = obb.equity.price.historical('AAPL', provider='polygon')
+    print('数据加载成功:', len(df), '行')
+    print(df.head())
+    "
+    ```
+
+  - 卸载
+    ```
+    pip uninstall openbb -y
+    rm -rf ~/.openbb
+    ```

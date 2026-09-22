@@ -1,0 +1,81 @@
+name: text-to-cad
+category: others
+type: 源码安装
+description: Tool that turns natural language descriptions into 3D CAD models
+license: MIT
+homepage: https://github.com/earthtojake/text-to-cad
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Node.js >= 18，推荐 >= 20）
+    sudo dnf install -y nodejs npm
+    node --version
+
+    # 如需安装特定版本，使用 nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 方式一：从源码安装（推荐）
+    git clone https://github.com/earthtojake/text-to-cad.git
+    cd text-to-cad
+    npm install
+
+    # 方式二：通过 npm 安装
+    npm install -g text-to-cad
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 如需使用 AI 模型生成 CAD，配置 API Key
+    export OPENAI_API_KEY="sk-your-api-key"
+    export ANTHROPIC_API_KEY="sk-ant-your-api-key"
+
+    # 配置文件 ~/.text-to-cad/config.json
+    # {
+    #   "ai": {
+    #     "provider": "openai",
+    #     "model": "gpt-4o",
+    #     "apiKey": "${OPENAI_API_KEY}"
+    #   },
+    #   "export": {
+    #     "defaultFormat": "stl",
+    #     "outputDir": "./exports"
+    #   }
+    # }
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 从文本生成 CAD 模型
+    text-to-cad generate "一个边长为5厘米的立方体"
+
+    # 生成并导出 STL 文件
+    text-to-cad generate "一个半径为3厘米的球体" --export output.stl
+
+    # 启动 Web 预览界面（浏览器访问 http://localhost:3000）
+    text-to-cad serve
+    ```
+
+  - 验证安装
+    ```
+    text-to-cad --version
+    text-to-cad generate "一个圆柱体" --preview
+    # 预期：生成模型并在浏览器中显示 3D 预览
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g text-to-cad
+    # 如从源码安装，删除目录
+    rm -rf text-to-cad
+    rm -rf ~/.text-to-cad
+    ```

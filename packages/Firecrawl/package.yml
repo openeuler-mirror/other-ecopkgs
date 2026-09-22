@@ -1,0 +1,71 @@
+name: Firecrawl
+category: others
+type: 源码安装
+description: Web crawling and content extraction tool turning pages into Markdown
+license: AGPL-3.0
+homepage: https://github.com/firecrawl/firecrawl
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y nodejs npm git gcc gcc-c++ make
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+
+    # 检查版本
+    node --version
+    # 需要 >= 18
+    npm --version
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 npm 全局安装（推荐）
+    npm install -g firecrawl
+
+    # 方式二：从源码安装（备选）
+    git clone https://github.com/nicklausw/firecrawl.git
+    cd firecrawl
+    npm install
+    npm run build
+    npm link
+    ```
+
+  - 基础配置
+    ```
+    export FIRECRAWL_API_KEY="fc-xxx"
+    ```
+
+  - 快速使用
+    ```
+    # 基本用法
+    firecrawl scrape https://example.com --format markdown
+    firecrawl scrape https://example.com -o output.md
+
+    # 常用命令
+    firecrawl scrape <url>           # 抓取单页
+    firecrawl crawl <url>            # 批量爬取
+    firecrawl map <url>              # 生成站点地图
+    firecrawl search <query>         # 搜索并抓取
+
+    # 抓取 JavaScript 渲染站点
+    firecrawl scrape <url> --javascript
+    ```
+
+  - 验证安装
+    ```
+    firecrawl --version
+
+    firecrawl scrape https://example.com --format markdown
+    ```
+
+  - 卸载说明
+    ```
+    npm uninstall -g firecrawl
+    ```

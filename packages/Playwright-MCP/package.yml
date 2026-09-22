@@ -1,0 +1,81 @@
+name: Playwright-MCP
+category: others
+type: 源码安装
+description: Browser automation MCP service based on Model Context Protocol
+license: Apache-2.0
+homepage: https://github.com/microsoft/playwright-mcp
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    npm --version
+    # Node.js >= 18
+
+    sudo dnf install -y nodejs npm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 npm 全局安装（推荐）
+    npm install -g @playwright/mcp
+    npx playwright install chromium
+
+    # 方式二：从源码安装
+    git clone https://github.com/microsoft/playwright-mcp.git
+    cd playwright-mcp
+    npm install
+    npm run build
+    npx playwright install chromium
+    ```
+
+  - 基础配置
+    ```
+    # 创建 playwright-mcp.config.json：
+    {
+      "browser": {
+        "type": "chromium",
+        "headless": true,
+        "args": ["--window-size=1280,720"]
+      },
+      "server": {
+        "port": 8931,
+        "host": "localhost"
+      },
+      "timeout": 30000
+    }
+    ```
+
+  - 快速使用
+    ```
+    # 启动 MCP 服务
+    npx @playwright/mcp start
+
+    # 指定配置文件启动
+    npx @playwright/mcp start --config playwright-mcp.config.json
+
+    # 常用命令
+    npx @playwright/mcp start           # 启动 MCP 服务
+    npx @playwright/mcp stop            # 停止服务
+    npx @playwright/mcp status          # 查看状态
+    ```
+
+  - 验证安装
+    ```
+    npx @playwright/mcp --version
+    npx playwright --version
+    ```
+
+  - 卸载
+    ```
+    npm uninstall -g @playwright/mcp
+    npx playwright uninstall
+    rm -rf ~/.cache/ms-playwright
+    ```

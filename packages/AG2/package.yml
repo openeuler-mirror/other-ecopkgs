@@ -1,0 +1,82 @@
+name: AG2
+category: others
+type: 源码安装
+description: Multi-agent conversation framework forked from Microsoft AutoGen
+license: Apache-2.0
+homepage: https://github.com/ag2ai/ag2
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.9
+    ```
+
+  - 安装
+    ```
+    # 方式一：通过 uv 安装（推荐）
+    uv venv .venv && source .venv/bin/activate
+    uv pip install "ag2[all]"
+
+    # 方式二：通过 pip 安装（备选）
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ "ag2[all]"
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+    export ANTHROPIC_API_KEY="sk-ant-xxx"
+
+    # 创建 OAI_CONFIG_LIST.json
+    [
+      {
+        "model": "gpt-4o",
+        "api_key": "sk-xxx",
+        "base_url": "https://api.openai.com/v1"
+      }
+    ]
+    ```
+
+  - 快速使用
+    ```
+    # 基本用法
+    import autogen
+
+    llm_config = {"config_list": [{"model": "gpt-4o", "api_key": "sk-xxx"}]}
+    assistant = autogen.AssistantAgent(name="assistant", llm_config=llm_config)
+    user_proxy = autogen.UserProxyAgent(
+        name="user_proxy",
+        human_input_mode="NEVER",
+        code_execution_config={"use_docker": False},
+    )
+    user_proxy.initiate_chat(
+        assistant,
+        message="Write a Python script to calculate fibonacci numbers.",
+    )
+
+    # 常用命令
+    python examples/simple_chat.py       # 运行示例
+    python examples/group_chat.py        # 运行群聊示例
+    pytest test/ -v                      # 运行测试
+    ```
+
+  - 验证安装
+    ```
+    python -c "import autogen; print(autogen.__version__)"
+
+    pytest test/ -v
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall ag2 -y
+    ```

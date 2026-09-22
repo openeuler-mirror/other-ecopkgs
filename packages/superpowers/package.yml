@@ -1,0 +1,69 @@
+name: superpowers
+category: others
+type: 源码安装
+description: Agent skills framework providing modular skills and tool-calling capabilities for AI assistants
+license: MIT
+homepage: https://github.com/obra/superpowers
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    node --version
+    # 需要 >= 18
+    npm --version
+    # 需要 >= 8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y nodejs npm git
+    # 或安装 LTS 版本
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc && nvm install --lts
+    npm config set registry https://registry.npmmirror.com
+    ```
+
+  - 安装
+    ```
+    # git clone 安装（推荐）
+    git clone https://github.com/obra/superpowers.git
+    cd superpowers
+    npm install
+    ```
+
+  - 验证安装
+    ```
+    npm test
+    # 或检查依赖是否就绪
+    ls node_modules/.package-lock.json
+    ```
+
+  - 基础配置
+    ```
+    cp .env.example .env
+
+    # 编辑 .env 文件
+    ANTHROPIC_API_KEY=sk-ant-xxx
+    OPENAI_API_KEY=sk-xxx
+    SKILLS_DIR=./skills
+    LOG_LEVEL=info
+    ```
+
+  - 快速使用
+    ```
+    node index.js
+    node index.js --load-skills ./my-skills
+
+    npm start                    # 启动服务
+    npm test                     # 运行测试
+    node index.js --help         # 查看帮助
+    node index.js --list-skills  # 列出可用技能
+    ```
+
+  - 卸载
+    ```
+    cd ..
+    rm -rf superpowers
+    ```

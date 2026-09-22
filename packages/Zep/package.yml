@@ -1,0 +1,99 @@
+name: Zep
+category: others
+type: 源码安装
+description: Long-term memory service with vector search for AI agents
+license: Apache-2.0
+homepage: https://github.com/getzep/zep
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装 Docker CE（需先配置 Docker CE 源）
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl enable --now docker
+
+    # 检查 Docker 环境
+    docker --version
+    # 需要 >= 20.10
+    docker compose version
+    ```
+
+  - 安装（Docker Compose，含 PostgreSQL）
+    ```
+    # 创建 docker-compose.yml
+    services:
+      zep:
+        image: getzep/zep:latest
+        ports:
+          - "8000:8000"
+        environment:
+          ZEP_STORE_TYPE: "postgres"
+          ZEP_POSTGRES_DSN: "postgres://zep:zep@db:5432/zep?sslmode=disable"
+          ZEP_OPENAI_API_KEY: "${OPENAI_API_KEY}"
+        depends_on:
+          - db
+        restart: unless-stopped
+
+      db:
+        image: postgres:16
+        environment:
+          POSTGRES_USER: zep
+          POSTGRES_PASSWORD: zep
+          POSTGRES_DB: zep
+        volumes:
+          - zep_data:/var/lib/postgresql/data
+        restart: unless-stopped
+
+    volumes:
+      zep_data:
+
+    # 启动服务
+    export OPENAI_API_KEY="sk-xxx"
+    docker compose up -d
+
+    # 方式二：Docker 单容器（备选，内存存储）
+    docker run -d --name zep -p 8000:8000 getzep/zep:latest
+    ```
+
+  - 基础配置
+    ```
+    export ZEP_OPENAI_API_KEY="sk-xxx"
+    export ZEP_STORE_TYPE="postgres"
+    export ZEP_SERVER_PORT=8000
+    ```
+
+  - 快速使用
+    ```
+    # 使用 Python 客户端
+    from zep_python import ZepClient
+
+    client = ZepClient(base_url="http://localhost:8000")
+    client.memory.add_session("session_1")
+    client.memory.add_memory(
+        session_id="session_1",
+        messages=[{"role": "user", "content": "Hi, I'm Alice"}],
+    )
+    results = client.memory.search(session_id="session_1", query="What is the user's name?")
+    print(results)
+
+    # 常用命令
+    docker compose up -d        # 启动 Zep 服务
+    docker compose down         # 停止服务
+    docker compose logs -f      # 查看日志
+    ```
+
+  - 验证安装
+    ```
+    curl http://localhost:8000/health
+    # 预期输出：{"status":"ok"}
+    ```
+
+  - 卸载说明
+    ```
+    docker compose down -v
+    docker rmi getzep/zep:latest
+    ```

@@ -1,0 +1,73 @@
+name: reverse-skill
+category: others
+type: 源码安装
+description: AI agent skill library for reverse engineering and binary analysis
+license: MIT
+homepage: https://github.com/zhaoxuya520/reverse-skill
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.8
+
+    # 依赖不满足时，在 openEuler 上安装
+    sudo dnf install -y python3 python3-pip python3-devel git gcc gcc-c++ make
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    uv pip install -e .
+
+    # 或 pip + 国内镜像
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 获取源码并安装
+    ```
+    # git clone + pip install（推荐）
+    git clone https://github.com/zhaoxuya520/reverse-skill.git
+    cd reverse-skill
+    pip install -e .
+
+    # 若仅需技能文档，clone 即可，无需安装 Python 包
+    ```
+
+  - 基础配置
+    ```
+    export OPENAI_API_KEY="sk-xxx"
+    export GHIDRA_PATH="/opt/ghidra"
+    ```
+
+  - 快速使用
+    ```
+    cat skills/reverse-engineering.md   # 查看逆向技能文档
+    ls skills/                              # 列出技能
+    cat skills/binary-analysis.md           # 查看二进制分析技能
+    python scripts/analyze.py binary.elf    # 分析二进制文件（如已安装）
+    ```
+
+  - 验证安装
+    ```
+    python -c "import reverse_skill; print(reverse_skill.__version__)"
+    # 或检查文件结构
+    ls -la
+
+    python -c "
+    try:
+        import reverse_skill
+        print('reverse_skill imported successfully')
+    except ImportError:
+        print('reverse_skill not installed')
+    "
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall reverse-skill
+    cd ..
+    rm -rf reverse-skill
+    ```

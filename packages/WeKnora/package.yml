@@ -1,0 +1,88 @@
+name: WeKnora
+category: others
+type: 源码安装
+description: Enterprise RAG knowledge Q&A framework open-sourced by Tencent
+license: NOASSERTION
+homepage: https://github.com/Tencent/WeKnora
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 前置条件
+    ```
+    # 安装依赖（openEuler）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # 检查 Python 版本
+    python --version
+    # 需要 >= 3.9
+    ```
+
+  - 获取源码并安装
+    ```
+    # 方式一：从源码 + uv 安装（推荐）
+    git clone https://github.com/Tencent/WeKnora.git
+    cd WeKnora
+
+    uv venv .venv && source .venv/bin/activate
+    uv pip install -r requirements.txt
+    uv pip install -e .
+
+    # 方式二：从源码 + pip 安装（备选）
+    git clone https://github.com/Tencent/WeKnora.git
+    cd WeKnora
+
+    python -m venv venv
+    source venv/bin/activate
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -e .
+    ```
+
+  - 基础配置
+    ```
+    # 创建 .env 文件
+    OPENAI_API_KEY="sk-xxx"
+    LLM_MODEL="gpt-4o"
+    DB_HOST="localhost"
+    DB_NAME="weknora"
+    SERVER_PORT=8000
+
+    # 配置文件示例 config.yaml
+    server:
+      host: "0.0.0.0"
+      port: 8000
+    llm:
+      backend: "openai"
+      model: "gpt-4o"
+    database:
+      type: "sqlite"
+      path: "./data/weknora.db"
+    ```
+
+  - 快速使用
+    ```
+    # 启动服务
+    python -m weknora init_db
+    python -m weknora serve
+
+    # 命令行查询
+    python -m weknora kb create --name "My Knowledge"
+    python -m weknora query --kb "My Knowledge" --question "文档内容是什么？"
+    ```
+
+  - 验证安装
+    ```
+    python -c "import weknora; print(weknora.__version__)"
+
+    python -m weknora serve &
+    curl http://localhost:8000/api/v1/health
+    ```
+
+  - 卸载说明
+    ```
+    pip uninstall weknora -y
+    rm -rf WeKnora/
+    ```

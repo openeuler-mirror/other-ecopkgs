@@ -1,0 +1,72 @@
+name: MiniMind
+category: others
+type: 源码安装
+description: Lightweight mini LLM training framework with pretrain/SFT/RLHF pipeline
+license: Apache-2.0
+homepage: https://github.com/jingyaogong/minimind
+
+maintainer: lw520203
+maintainer-email: 1823363429@qq.com
+
+usage: |
+
+  - 环境准备 / 前置条件
+    ```
+    # 系统依赖（Python >= 3.9，推荐 >= 3.10）
+    sudo dnf install -y python3 python3-pip python3-devel git gcc
+    python3 --version
+
+    # 推荐使用 uv 创建虚拟环境并配置国内镜像
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv .venv && source .venv/bin/activate
+    pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    ```
+
+  - 获取源码 / 安装
+    ```
+    # 方式一：从源码安装（推荐）
+    git clone https://github.com/jingyaogong/minimind.git
+    cd minimind
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+
+    # 方式二：通过 pip 安装
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ minimind
+    ```
+
+  - 初始化 / 基础配置
+    ```
+    # 设置 Hugging Face 缓存目录
+    export HF_HOME="~/.cache/huggingface"
+
+    # 使用国内镜像（数据/模型下载）
+    export HF_ENDPOINT="https://hf-mirror.com"
+    ```
+
+  - 启动 / 快速使用
+    ```
+    # 数据准备
+    python prepare_data.py
+
+    # 运行预训练
+    python pretrain.py --config config.py
+
+    # 运行指令微调
+    python sft.py --config config.py
+
+    # 运行推理
+    python inference.py --model_path ./output/pretrain --prompt "你好"
+    ```
+
+  - 验证安装
+    ```
+    python -c "import minimind; print('安装成功')"
+    python pretrain.py --config config.py --max_steps 10
+    # 预期：训练循环正常运行，输出 loss 值
+    ```
+
+  - 卸载
+    ```
+    pip uninstall minimind -y
+    # 如从源码安装，删除目录
+    rm -rf minimind
+    ```
